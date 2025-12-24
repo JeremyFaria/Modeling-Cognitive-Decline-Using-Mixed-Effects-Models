@@ -1,0 +1,1 @@
+For my undergraduate Thesis I am analyzing covariates that lead to a steeper cognitive decline in the US elderly. I am using publically accessible 30 year longitudinal survey from the Health and Retirement Study. Mixed effect models will be used in my research. Please see my reports and presentations to see my thought process through this project as the code is not commented.
