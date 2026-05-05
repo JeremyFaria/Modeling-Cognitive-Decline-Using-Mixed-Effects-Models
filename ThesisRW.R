@@ -1624,3 +1624,2314 @@ library(patchwork)
 
 stacked_plots <- plot1 / plot2
 print(stacked_plots)
+
+#January 18th
+
+
+
+HRS$RAESTRAT #Stratums
+sum(unique(HRS$RAESTRAT)) #Stratums 
+sum(unique(HRS$RAEHSAMP)) #clusters 
+
+all_cog_smoke <- subset(HRS, select = c(HHIDPN, R3COG27,
+                                        R3AGEY_E,
+                                        R3SMOKEN,
+                                        R4COG27,
+                                        R4AGEY_E,
+                                        R4SMOKEN,
+                                        R5COG27,
+                                        R5AGEY_E,
+                                        R5SMOKEN,
+                                        R6COG27,
+                                        R6AGEY_E,
+                                        R6SMOKEN,
+                                        R7COG27,
+                                        R7AGEY_E,
+                                        R7SMOKEN,
+                                        R8COG27,
+                                        R8AGEY_E,
+                                        R8SMOKEN,
+                                        R9COG27,
+                                        R9AGEY_E,
+                                        R9SMOKEN,
+                                        R10COG27,
+                                        R10AGEY_E,
+                                        R10SMOKEN,
+                                        R11COG27,
+                                        R11AGEY_E,
+                                        R11SMOKEN,
+                                        R12COG27,
+                                        R12AGEY_E,
+                                        R12SMOKEN,
+                                        R13COG27,
+                                        R13AGEY_E,
+                                        R13SMOKEN,
+                                        R14COG27,
+                                        R14AGEY_E,
+                                        R14SMOKEN,
+                                        R15COG27,
+                                        R15AGEY_E,
+                                        R15SMOKEN,
+                                        R3WTRESP,
+                                        R4WTRESP,
+                                        R5WTRESP,
+                                        R6WTRESP,
+                                        R7WTRESP,
+                                        R8WTRESP,
+                                        R9WTRESP,
+                                        R10WTRESP,
+                                        R11WTRESP,
+                                        R12WTRESP,
+                                        R13WTRESP,
+                                        R14WTRESP,
+                                        R15WTRESP,
+                                        RAESTRAT,
+                                        RAEHSAMP))
+
+all_cog_smoke$weight <- NA
+
+library(dplyr)
+
+all_cog_smoke <- all_cog_smoke %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R9WTRESP) & R9WTRESP != 0 ~ R9WTRESP,
+    !is.na(R8WTRESP) & R8WTRESP != 0 ~ R8WTRESP,
+    !is.na(R7WTRESP) & R7WTRESP != 0 ~ R7WTRESP,
+    !is.na(R6WTRESP) & R6WTRESP != 0 ~ R6WTRESP,
+    !is.na(R5WTRESP) & R5WTRESP != 0 ~ R5WTRESP,
+    !is.na(R4WTRESP) & R4WTRESP != 0 ~ R4WTRESP,
+    !is.na(R3WTRESP) & R3WTRESP != 0 ~ R3WTRESP,
+    TRUE ~ 0
+  ))
+
+all_cog_smoke_pivot <- data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R3COG27, Age = all_cog_smoke$R3AGEY_E, Smoke = all_cog_smoke$R3SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP)
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R4COG27, Age = all_cog_smoke$R4AGEY_E, Smoke = all_cog_smoke$R4SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP))
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R5COG27, Age = all_cog_smoke$R5AGEY_E, Smoke = all_cog_smoke$R5SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP))                           
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R6COG27, Age = all_cog_smoke$R6AGEY_E, Smoke = all_cog_smoke$R6SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP))
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R7COG27, Age = all_cog_smoke$R7AGEY_E, Smoke = all_cog_smoke$R7SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP))  
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R8COG27, Age = all_cog_smoke$R8AGEY_E, Smoke = all_cog_smoke$R8SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP))
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R9COG27, Age = all_cog_smoke$R9AGEY_E, Smoke = all_cog_smoke$R9SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP))  
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R10COG27, Age = all_cog_smoke$R10AGEY_E, Smoke = all_cog_smoke$R10SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP))
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R11COG27, Age = all_cog_smoke$R11AGEY_E, Smoke = all_cog_smoke$R11SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP))  
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R12COG27, Age = all_cog_smoke$R12AGEY_E, Smoke = all_cog_smoke$R12SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP))
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R13COG27, Age = all_cog_smoke$R13AGEY_E, Smoke = all_cog_smoke$R13SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP)) 
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R14COG27, Age = all_cog_smoke$R14AGEY_E, Smoke = all_cog_smoke$R14SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP))
+all_cog_smoke_pivot <- rbind(all_cog_smoke_pivot, data.frame(ID = all_cog_smoke$HHIDPN, Score = all_cog_smoke$R15COG27, Age = all_cog_smoke$R15AGEY_E, Smoke = all_cog_smoke$R15SMOKEN, Weight = all_cog_smoke$weight, stratum = all_cog_smoke$RAESTRAT, cluster = all_cog_smoke$RAEHSAMP))
+
+#good code just had to change stuff
+#all_cog_strat_clust <- cbind(all_cog, HRS$RAESTRAT, HRS$RAEHSAMP)
+#all_cog_strat_clust <- all_cog_strat_clust[all_cog_strat_clust[,ncol(all_cog_strat_clust)] != 99, ]
+#names(all_cog_strat_clust)[(ncol(all_cog_strat_clust)-1):ncol(all_cog_strat_clust)] <- c("Stratum", "Cluster")
+
+library(survey)
+
+all_cog_smoke_pivot <- all_cog_smoke_pivot[all_cog_smoke_pivot[ncol(all_cog_smoke_pivot)] != 99, ]
+all_cog_smoke_pivot <- all_cog_smoke_pivot[all_cog_smoke_pivot$Weight > 0, ]
+
+all_cog_smoke_pivot <- na.omit(all_cog_smoke_pivot)
+
+dclus <- svydesign(ids=~all_cog_smoke_pivot$ID,
+          strata = all_cog_smoke_pivot$Stratum, data = all_cog_smoke_pivot,
+          weights = all_cog_smoke_pivot$Weight, nest = TRUE)
+#cant load due to memory
+#library(svylme)
+#library(Matrix)
+
+#svy2lme(Score ~ Age+ Smoke + (1 | ID), design = dclus)
+
+library(lme4)
+fm1 <- lmer(data = all_cog_smoke_pivot, Score ~ Age + Smoke + (1 | ID), weights = Weight)
+summary(fm1)
+plot(fm1)
+coef(fm1)
+
+all_cog_var <- subset(HRS, select = c(HHIDPN, R3COG27,
+                                        R3AGEY_E,
+                                        R3SMOKEN,
+                                        R4COG27,
+                                        R4AGEY_E,
+                                        R4SMOKEN,
+                                        R5COG27,
+                                        R5AGEY_E,
+                                        R5SMOKEN,
+                                        R6COG27,
+                                        R6AGEY_E,
+                                        R6SMOKEN,
+                                        R7COG27,
+                                        R7AGEY_E,
+                                        R7SMOKEN,
+                                        R8COG27,
+                                        R8AGEY_E,
+                                        R8SMOKEN,
+                                        R9COG27,
+                                        R9AGEY_E,
+                                        R9SMOKEN,
+                                        R10COG27,
+                                        R10AGEY_E,
+                                        R10SMOKEN,
+                                        R11COG27,
+                                        R11AGEY_E,
+                                        R11SMOKEN,
+                                        R12COG27,
+                                        R12AGEY_E,
+                                        R12SMOKEN,
+                                        R13COG27,
+                                        R13AGEY_E,
+                                        R13SMOKEN,
+                                        R14COG27,
+                                        R14AGEY_E,
+                                        R14SMOKEN,
+                                        R15COG27,
+                                        R15AGEY_E,
+                                        R15SMOKEN,
+                                        R3WTRESP,
+                                        R4WTRESP,
+                                        R5WTRESP,
+                                        R6WTRESP,
+                                        R7WTRESP,
+                                        R8WTRESP,
+                                        R9WTRESP,
+                                        R10WTRESP,
+                                        R11WTRESP,
+                                        R12WTRESP,
+                                        R13WTRESP,
+                                        R14WTRESP,
+                                        R15WTRESP,
+                                        R3CESD,
+                                        R4CESD,
+                                        R5CESD,
+                                        R6CESD,
+                                        R7CESD,
+                                        R8CESD,
+                                        R9CESD,
+                                        R10CESD,
+                                        R11CESD,
+                                        R12CESD,
+                                        R13CESD,
+                                        R14CESD,
+                                        R15CESD,
+                                        RAHISPAN,
+                                        RAESTRAT,
+                                        RAEHSAMP))
+
+library(dplyr)
+
+all_cog_var <- all_cog_var %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R9WTRESP) & R9WTRESP != 0 ~ R9WTRESP,
+    !is.na(R8WTRESP) & R8WTRESP != 0 ~ R8WTRESP,
+    !is.na(R7WTRESP) & R7WTRESP != 0 ~ R7WTRESP,
+    !is.na(R6WTRESP) & R6WTRESP != 0 ~ R6WTRESP,
+    !is.na(R5WTRESP) & R5WTRESP != 0 ~ R5WTRESP,
+    !is.na(R4WTRESP) & R4WTRESP != 0 ~ R4WTRESP,
+    !is.na(R3WTRESP) & R3WTRESP != 0 ~ R3WTRESP,
+    TRUE ~ 0
+  ))
+
+all_cog_var_pivot <- data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R3COG27, Age = all_cog_var$R3AGEY_E, Smoke = all_cog_var$R3SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD)
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R4COG27, Age = all_cog_var$R4AGEY_E, Smoke = all_cog_var$R4SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R4CESD))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R5COG27, Age = all_cog_var$R5AGEY_E, Smoke = all_cog_var$R5SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R5CESD))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R6COG27, Age = all_cog_var$R6AGEY_E, Smoke = all_cog_var$R6SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R6CESD))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R7COG27, Age = all_cog_var$R7AGEY_E, Smoke = all_cog_var$R7SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R7CESD))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R8COG27, Age = all_cog_var$R8AGEY_E, Smoke = all_cog_var$R8SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R8CESD))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R9COG27, Age = all_cog_var$R9AGEY_E, Smoke = all_cog_var$R9SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R9CESD))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R10COG27, Age = all_cog_var$R10AGEY_E, Smoke = all_cog_var$R10SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R10CESD))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R11COG27, Age = all_cog_var$R11AGEY_E, Smoke = all_cog_var$R11SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R11CESD))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R12COG27, Age = all_cog_var$R12AGEY_E, Smoke = all_cog_var$R12SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R12CESD))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R13COG27, Age = all_cog_var$R13AGEY_E, Smoke = all_cog_var$R13SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R13CESD))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R14COG27, Age = all_cog_var$R14AGEY_E, Smoke = all_cog_var$R14SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R14CESD))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R15COG27, Age = all_cog_var$R15AGEY_E, Smoke = all_cog_var$R15SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R15CESD))
+colSums(is.na(all_cog_var_pivot))
+all_cog_var_pivot <- na.omit(all_cog_var_pivot)
+all_cog_var_pivot <- all_cog_var_pivot[all_cog_var_pivot$Weight > 0, ]
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Depression = case_when(
+    Depressed > 2 ~ 1,
+    TRUE ~ 0
+  ))
+
+fm1 <- lmer(data = all_cog_var_pivot, Score ~ Age + Smoke + Hispanic + Depression + (1 | ID), weights = Weight)
+summary(fm1)
+plot(fm1)
+plot(fitted(fm1), resid(fm1))
+library(ggplot2)
+ggplot(aes(fitted(fm1), resid(fm1)))+
+  geom_point(alpha = 0.03)
+
+# Jan 26th
+
+all_cog_var <- subset(HRS, select = c(HHIDPN, R3COG27,
+                                      R3AGEY_E,
+                                      R3SMOKEN,
+                                      R4COG27,
+                                      R4AGEY_E,
+                                      R4SMOKEN,
+                                      R5COG27,
+                                      R5AGEY_E,
+                                      R5SMOKEN,
+                                      R6COG27,
+                                      R6AGEY_E,
+                                      R6SMOKEN,
+                                      R7COG27,
+                                      R7AGEY_E,
+                                      R7SMOKEN,
+                                      R8COG27,
+                                      R8AGEY_E,
+                                      R8SMOKEN,
+                                      R9COG27,
+                                      R9AGEY_E,
+                                      R9SMOKEN,
+                                      R10COG27,
+                                      R10AGEY_E,
+                                      R10SMOKEN,
+                                      R11COG27,
+                                      R11AGEY_E,
+                                      R11SMOKEN,
+                                      R12COG27,
+                                      R12AGEY_E,
+                                      R12SMOKEN,
+                                      R13COG27,
+                                      R13AGEY_E,
+                                      R13SMOKEN,
+                                      R14COG27,
+                                      R14AGEY_E,
+                                      R14SMOKEN,
+                                      R15COG27,
+                                      R15AGEY_E,
+                                      R15SMOKEN,
+                                      R3WTRESP,
+                                      R4WTRESP,
+                                      R5WTRESP,
+                                      R6WTRESP,
+                                      R7WTRESP,
+                                      R8WTRESP,
+                                      R9WTRESP,
+                                      R10WTRESP,
+                                      R11WTRESP,
+                                      R12WTRESP,
+                                      R13WTRESP,
+                                      R14WTRESP,
+                                      R15WTRESP,
+                                      R3CESD,
+                                      R4CESD,
+                                      R5CESD,
+                                      R6CESD,
+                                      R7CESD,
+                                      R8CESD,
+                                      R9CESD,
+                                      R10CESD,
+                                      R11CESD,
+                                      R12CESD,
+                                      R13CESD,
+                                      R14CESD,
+                                      R15CESD,
+                                      RAHISPAN,
+                                      RAEDEGRM,
+                                      R3DIABE,
+                                      R4DIABE,
+                                      R5DIABE,
+                                      R6DIABE,
+                                      R7DIABE,
+                                      R8DIABE,
+                                      R9DIABE,
+                                      R10DIABE,
+                                      R11DIABE,
+                                      R12DIABE,
+                                      R13DIABE,
+                                      R14DIABE,
+                                      R15DIABE,
+                                      R3BMI,
+                                      R4BMI,
+                                      R5BMI,
+                                      R6BMI,
+                                      R7BMI,
+                                      R8BMI,
+                                      R9BMI,
+                                      R10BMI,
+                                      R11BMI,
+                                      R12BMI,
+                                      R13BMI,
+                                      R14BMI,
+                                      R15BMI,
+                                      RAESTRAT,
+                                      RAEHSAMP))
+
+library(dplyr)
+
+all_cog_var <- all_cog_var %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R9WTRESP) & R9WTRESP != 0 ~ R9WTRESP,
+    !is.na(R8WTRESP) & R8WTRESP != 0 ~ R8WTRESP,
+    !is.na(R7WTRESP) & R7WTRESP != 0 ~ R7WTRESP,
+    !is.na(R6WTRESP) & R6WTRESP != 0 ~ R6WTRESP,
+    !is.na(R5WTRESP) & R5WTRESP != 0 ~ R5WTRESP,
+    !is.na(R4WTRESP) & R4WTRESP != 0 ~ R4WTRESP,
+    !is.na(R3WTRESP) & R3WTRESP != 0 ~ R3WTRESP,
+    TRUE ~ 0
+  ))
+
+all_cog_var_pivot <- data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R3COG27, Age = all_cog_var$R3AGEY_E, Smoke = all_cog_var$R3SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R3BMI)
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R4COG27, Age = all_cog_var$R4AGEY_E, Smoke = all_cog_var$R4SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R4CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R4DIABE, BMI = all_cog_var$R4BMI))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R5COG27, Age = all_cog_var$R5AGEY_E, Smoke = all_cog_var$R5SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R5CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R5DIABE, BMI = all_cog_var$R5BMI))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R6COG27, Age = all_cog_var$R6AGEY_E, Smoke = all_cog_var$R6SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R6CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R6DIABE, BMI = all_cog_var$R6BMI))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R7COG27, Age = all_cog_var$R7AGEY_E, Smoke = all_cog_var$R7SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R7CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R7DIABE, BMI = all_cog_var$R7BMI))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R8COG27, Age = all_cog_var$R8AGEY_E, Smoke = all_cog_var$R8SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R8CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R8DIABE, BMI = all_cog_var$R8BMI))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R9COG27, Age = all_cog_var$R9AGEY_E, Smoke = all_cog_var$R9SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R9CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R9DIABE, BMI = all_cog_var$R9BMI))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R10COG27, Age = all_cog_var$R10AGEY_E, Smoke = all_cog_var$R10SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R10CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R10DIABE, BMI = all_cog_var$R10BMI))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R11COG27, Age = all_cog_var$R11AGEY_E, Smoke = all_cog_var$R11SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R11CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R11DIABE, BMI = all_cog_var$R11BMI))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R12COG27, Age = all_cog_var$R12AGEY_E, Smoke = all_cog_var$R12SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R12CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R12DIABE, BMI = all_cog_var$R12BMI))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R13COG27, Age = all_cog_var$R13AGEY_E, Smoke = all_cog_var$R13SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R13CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R13DIABE, BMI = all_cog_var$R13BMI))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R14COG27, Age = all_cog_var$R14AGEY_E, Smoke = all_cog_var$R14SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R14CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R14DIABE, BMI = all_cog_var$R14BMI))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R15COG27, Age = all_cog_var$R15AGEY_E, Smoke = all_cog_var$R15SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R15CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R15DIABE, BMI = all_cog_var$R15BMI))
+colSums(is.na(all_cog_var_pivot))
+all_cog_var_pivot <- na.omit(all_cog_var_pivot)
+all_cog_var_pivot <- all_cog_var_pivot[all_cog_var_pivot$Weight > 0, ]
+all_cog_var_pivot <- all_cog_var_pivot[!is.na(all_cog_var_pivot$Score), ]
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Depression = case_when(
+    Depressed > 2 ~ 1,
+    TRUE ~ 0
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Education_Level = case_when(
+    Education == 0 ~ 0,
+    Education < 4 ~ 1,
+    Education < 6 ~ 2,
+    Education < 8 ~ 3,
+    TRUE ~ 5
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Age_group = case_when(
+    Age < 65 ~ "50-65",
+    Age < 80 ~ "65-80",
+    TRUE ~ "80+"
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot[all_cog_var_pivot$Age >= 50, ]
+all_cog_var_pivot <- all_cog_var_pivot[all_cog_var_pivot$Education_Level!=5, ]
+all_cog_var_pivot <- na.omit(all_cog_var_pivot)
+library(ggplot2)
+ggplot(all_cog_var_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(Education_Level)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#DABFFF", "907AD6", "4F518C", "2C2A4A"),
+                    name = "Education Level",
+                    labels = c("No Degree", "High School or GED", "Associates or Bachelors", "Masters or Doctorate"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Education Level",
+       x = "Age Group",
+       y = "Cognition Score")
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Age_group2 = case_when(
+      Age < 55 ~ "50-54",
+      Age < 60 ~ "55-59",
+      Age < 65 ~ "60-64",
+      Age < 70 ~ "65-69",
+      Age < 75 ~ "70-74",
+      Age < 80 ~ "75-79",
+      Age < 85 ~ "80-84",
+      Age < 90 ~ "85-89",
+      Age < 95 ~ "90-94",
+      TRUE ~ "95+"
+  ))
+
+library(ggplot2)
+ggplot(all_cog_var_pivot, aes(x = Age_group2, y = Score, weight = Weight, fill = factor(diabetes)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("skyblue", "lightcoral"),
+                    name = "Has Diabetes",
+                    labels = c("No", "Yes"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Diabetic vs Non Diabetic",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+
+ggplot(all_cog_var_pivot, aes(x = BMI, y = Score, color = factor(Age_group2), size = Weight))+
+  geom_smooth(
+    method = "lm",
+    mapping = aes(weight = Weight),
+    size = 1.5
+  )+
+  labs(
+    title = "Weighted Regression Lines on Cognitions Scores By BMI\n Across Age Groups",
+    x = "BMI",
+    y = "Cognition Score",
+    color = "Age Group"
+  )
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(BMI_category = case_when(
+    BMI < 18.5 ~ 0,
+    BMI < 24.9 ~ 1,
+    BMI < 29.9 ~ 2,
+    BMI < 34.9 ~ 3,
+    TRUE ~ 4
+  ))
+
+ggplot(all_cog_var_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(BMI_category)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#B2AC88", "#DCAE96", "#FDF5E6", "#5F6F79", "#A69076"),
+                    name = "BMI Category",
+                    labels = c("Underweight", "Healthy Weight", "Overweight", "Moderate Obesity", "Severe Obesity"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn BMI Category",
+       x = "Age Group",
+       y = "Cognition Score")
+
+library(lme4)
+fm1 <- lmer(data = all_cog_var_pivot, Score ~ Age + Smoke + Hispanic + Depression + factor(Education_Level) + (1 | ID), weights = Weight)
+summary(fm1)
+plot(fm1)
+
+boxplot(HRS$R12DRINKN)
+
+unique(HRS$R8LBLONELY3)
+
+unique(round(na.omit(HRS$R8LBLONELY3)))
+
+length(unique(HRS$RAESTRAT))
+
+
+fm2 <- lmer(data = all_cog_var_pivot, Score ~ Age + Smoke + Hispanic + Depression + factor(Education_Level) + (1 | ID) + (0 + Age | ID), weights = Weight)
+summary(fm2)
+
+
+all_cog_var_pivot$Age.Minus.55 <- all_cog_var_pivot$Age - 55
+fm1 <- lmer(data = all_cog_var_pivot, Score ~ Age.Minus.55 + Smoke + Hispanic + Depression + factor(Education_Level) + (1 | ID), weights = Weight)
+summary(fm1)
+
+fm2 <- lmer(data = all_cog_var_pivot, Score ~ Age.Minus.55 + Smoke + Hispanic + Depression + factor(Education_Level) + (1 | ID) + (0 + Age | ID), weights = Weight)
+summary(fm2)
+
+fm3 <- lmer(data = all_cog_var_pivot, Score ~ Age.Minus.55 + Smoke + Hispanic + Depression + factor(Education_Level) + diabetes + (1 + Age | ID), weights = Weight)
+summary(fm3)
+library(lmerTest)
+fm3test <- as_lmerModLmerTest(fm3)
+anova(fm3test)
+ranova(fm3test)
+step(fm3test)
+plot(fm3)
+
+
+#Feb 9th
+all_cog_var_pivot_2 <- data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R8COG27, Age = all_cog_var$R8AGEY_E, Smoke = all_cog_var$R8SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R8CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R8DIABE, BMI = all_cog_var$R8BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP)
+all_cog_var_pivot_2 <- rbind(all_cog_var_pivot_2,data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R9COG27, Age = all_cog_var$R9AGEY_E, Smoke = all_cog_var$R9SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R9CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R9DIABE, BMI = all_cog_var$R9BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP))
+all_cog_var_pivot_2 <- rbind(all_cog_var_pivot_2,data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R10COG27, Age = all_cog_var$R10AGEY_E, Smoke = all_cog_var$R10SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R10CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R10DIABE, BMI = all_cog_var$R10BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP))
+all_cog_var_pivot_2 <- rbind(all_cog_var_pivot_2,data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R11COG27, Age = all_cog_var$R11AGEY_E, Smoke = all_cog_var$R11SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R11CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R11DIABE, BMI = all_cog_var$R11BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP))
+all_cog_var_pivot_2 <- rbind(all_cog_var_pivot_2,data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R12COG27, Age = all_cog_var$R12AGEY_E, Smoke = all_cog_var$R12SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R12CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R12DIABE, BMI = all_cog_var$R12BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP))
+all_cog_var_pivot_2 <- rbind(all_cog_var_pivot_2,data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R13COG27, Age = all_cog_var$R13AGEY_E, Smoke = all_cog_var$R13SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R13CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R13DIABE, BMI = all_cog_var$R13BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP))
+all_cog_var_pivot_2 <- rbind(all_cog_var_pivot_2,data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R14COG27, Age = all_cog_var$R14AGEY_E, Smoke = all_cog_var$R14SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R14CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R14DIABE, BMI = all_cog_var$R14BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP))
+all_cog_var_pivot_2 <- rbind(all_cog_var_pivot_2,data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R15COG27, Age = all_cog_var$R15AGEY_E, Smoke = all_cog_var$R15SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R15CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R15DIABE, BMI = all_cog_var$R15BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP))
+all_cog_var_pivot_2 <- all_cog_var_pivot_2[all_cog_var_pivot_2$Weight > 0, ]
+all_cog_var_pivot_2 <- all_cog_var_pivot_2[!is.na(all_cog_var_pivot_2$Score), ]
+library(svylme)
+library(Matrix)
+library(survey)
+dclus <- svydesign(id=~1,
+                   strata = ~Stratum, data = all_cog_var_pivot_2,
+                   weights = ~Weight)
+#wont work
+#still too big
+#svy2lme(Score ~ Age+ Smoke + (1 | Stratum), design = dclus)
+#summary(weights(dclus))
+
+
+library(WeMix)
+all_cog_var_pivot_2$Weight2 <- 1
+
+set.seed(123)
+
+all_cog_var_pivot_2 <- all_cog_var_pivot_2 %>%
+  mutate(Depression = case_when(
+    Depressed > 2 ~ 1,
+    TRUE ~ 0
+  ))
+
+all_cog_var_pivot_2 <- all_cog_var_pivot_2 %>%
+  mutate(Education_Level = case_when(
+    Education == 0 ~ 0,
+    Education < 4 ~ 1,
+    Education < 6 ~ 2,
+    Education < 8 ~ 3,
+    TRUE ~ 5
+  ))
+
+
+fm1 <- mix(Score ~ Age + Smoke + Hispanic + Depressed + factor(Education_Level) + (1|ID), data = all_cog_var_pivot_2, weights = c("Weight", "Weight2"))
+
+library(dplyr)
+all_cog_var_exercise <- subset(HRS, select = c(HHIDPN,
+                                               R7VGACTX,
+                                               R8VGACTX,
+                                               R9VGACTX,
+                                               R10VGACTX,
+                                               R11VGACTX,
+                                               R12VGACTX,
+                                               R13VGACTX,
+                                               R14VGACTX,
+                                               R15VGACTX,
+                                               R7MDACTX,
+                                               R8MDACTX,
+                                               R9MDACTX,
+                                               R10MDACTX,
+                                               R11MDACTX,
+                                               R12MDACTX,
+                                               R13MDACTX,
+                                               R14MDACTX,
+                                               R15MDACTX,
+                                               R7LTACTX,
+                                               R8LTACTX,
+                                               R9LTACTX,
+                                               R10LTACTX,
+                                               R11LTACTX,
+                                               R12LTACTX,
+                                               R13LTACTX,
+                                               R14LTACTX,
+                                               R15LTACTX,
+                                               R7WTRESP,
+                                               R8WTRESP,
+                                               R9WTRESP,
+                                               R10WTRESP,
+                                               R11WTRESP,
+                                               R12WTRESP,
+                                               R13WTRESP,
+                                               R14WTRESP,
+                                               R15WTRESP,
+                                               R7COG27,
+                                               R8COG27,
+                                               R9COG27,
+                                               R10COG27,
+                                               R11COG27,
+                                               R12COG27,
+                                               R13COG27,
+                                               R14COG27,
+                                               R15COG27,
+                                               R7AGEY_E,
+                                               R8AGEY_E,
+                                               R9AGEY_E,
+                                               R10AGEY_E,
+                                               R11AGEY_E,
+                                               R12AGEY_E,
+                                               R13AGEY_E,
+                                               R14AGEY_E,
+                                               R15AGEY_E))
+all_cog_var_exercise <- all_cog_var_exercise %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R9WTRESP) & R9WTRESP != 0 ~ R9WTRESP,
+    !is.na(R8WTRESP) & R8WTRESP != 0 ~ R8WTRESP,
+    !is.na(R7WTRESP) & R7WTRESP != 0 ~ R7WTRESP,
+    TRUE ~ 0
+  ))
+
+all_cog_var_exercise_pivot <- data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R7COG27 , Age = all_cog_var_exercise$R7AGEY_E, Vigorous = all_cog_var_exercise$R7VGACTX, Moderate = all_cog_var_exercise$R7MDACTX, Light = all_cog_var_exercise$R7LTACTX)
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R8COG27 , Age = all_cog_var_exercise$R8AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R8VGACTX, Moderate = all_cog_var_exercise$R8MDACTX, Light = all_cog_var_exercise$R8LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R9COG27 , Age = all_cog_var_exercise$R9AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R9VGACTX, Moderate = all_cog_var_exercise$R9MDACTX, Light = all_cog_var_exercise$R9LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R10COG27 , Age = all_cog_var_exercise$R10AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R10VGACTX, Moderate = all_cog_var_exercise$R10MDACTX, Light = all_cog_var_exercise$R10LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R11COG27 , Age = all_cog_var_exercise$R11AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R11VGACTX, Moderate = all_cog_var_exercise$R11MDACTX, Light = all_cog_var_exercise$R11LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R12COG27 , Age = all_cog_var_exercise$R12AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R12VGACTX, Moderate = all_cog_var_exercise$R12MDACTX, Light = all_cog_var_exercise$R12LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R13COG27 , Age = all_cog_var_exercise$R13AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R13VGACTX, Moderate = all_cog_var_exercise$R13MDACTX, Light = all_cog_var_exercise$R13LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R14COG27 , Age = all_cog_var_exercise$R14AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R14VGACTX, Moderate = all_cog_var_exercise$R14MDACTX, Light = all_cog_var_exercise$R14LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R15COG27 , Age = all_cog_var_exercise$R15AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R15VGACTX, Moderate = all_cog_var_exercise$R15MDACTX, Light = all_cog_var_exercise$R15LTACTX))
+library(ggplot2)
+all_cog_var_exercise_pivot<- na.omit(all_cog_var_exercise_pivot)
+all_cog_var_exercise_pivot <- all_cog_var_exercise_pivot[!is.na(all_cog_var_exercise_pivot$Weight), ]
+ggplot(all_cog_var_exercise_pivot, aes(x = factor(Vigorous), y = Score, weight = Weight))+
+  geom_boxplot()
+ggplot(all_cog_var_exercise_pivot, aes(x = factor(Moderate), y = Score, weight = Weight))+
+  geom_boxplot()
+ggplot(all_cog_var_exercise_pivot, aes(x = factor(Light), y = Score, weight = Weight))+
+  geom_boxplot()
+
+all_cog_var_exercise_pivot <- all_cog_var_exercise_pivot %>%
+  mutate(Age_group = case_when(
+    Age < 65 ~ "50-65",
+    Age < 80 ~ "65-80",
+    TRUE ~ "80+"
+  ))
+
+ggplot(all_cog_var_exercise_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(Light)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#264653", "#2a9d8f", "#e9c46a", "#f4a261", "#e76f51"),
+                    name = "Frequency of Light Physical Activity\n(finer scale)",
+                    labels = c("Every Day", ">1 Per Week", "1 per week", "1-3 per month", "Never"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Frequency of Light Physical Activity",
+       x = "Age Group",
+       y = "Cognition Score")
+
+
+all_cog_var_industry <- subset(HRS, select = c(HHIDPN,
+                                               R3WTRESP,
+                                               R4WTRESP,
+                                               R5WTRESP,
+                                               R6WTRESP,
+                                               R7WTRESP,
+                                               R8WTRESP,
+                                               R9WTRESP,
+                                               R10WTRESP,
+                                               R11WTRESP,
+                                               R12WTRESP,
+                                               R13WTRESP,
+                                               R14WTRESP,
+                                               R15WTRESP,
+                                               R3COG27,
+                                               R4COG27,
+                                               R5COG27,
+                                               R6COG27,
+                                               R7COG27,
+                                               R8COG27,
+                                               R9COG27,
+                                               R10COG27,
+                                               R11COG27,
+                                               R12COG27,
+                                               R13COG27,
+                                               R14COG27,
+                                               R15COG27,
+                                               R3AGEY_E,
+                                               R4AGEY_E,
+                                               R5AGEY_E,
+                                               R6AGEY_E,
+                                               R7AGEY_E,
+                                               R8AGEY_E,
+                                               R9AGEY_E,
+                                               R10AGEY_E,
+                                               R11AGEY_E,
+                                               R12AGEY_E,
+                                               R13AGEY_E,
+                                               R14AGEY_E,
+                                               R15AGEY_E,
+                                               R3JLIND,
+                                               R4JLIND,
+                                               R5JLIND,
+                                               R6JLIND,
+                                               R7JLIND,
+                                               R8JLIND,
+                                               R9JLIND,
+                                               R10JLIND,
+                                               R11JLIND,
+                                               R12JLIND,
+                                               R13JLIND,
+                                               R14JLIND,
+                                               R15JLIND))
+all_cog_var_industry <- all_cog_var_industry %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R9WTRESP) & R9WTRESP != 0 ~ R9WTRESP,
+    !is.na(R8WTRESP) & R8WTRESP != 0 ~ R8WTRESP,
+    !is.na(R7WTRESP) & R7WTRESP != 0 ~ R7WTRESP,
+    !is.na(R6WTRESP) & R6WTRESP != 0 ~ R6WTRESP,
+    !is.na(R5WTRESP) & R5WTRESP != 0 ~ R5WTRESP,
+    !is.na(R4WTRESP) & R4WTRESP != 0 ~ R4WTRESP,
+    !is.na(R3WTRESP) & R3WTRESP != 0 ~ R3WTRESP,
+    TRUE ~ 0
+  ))
+
+all_cog_var_industry_pivot <- data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                         Score = all_cog_var_industry$R3COG27, Industry = all_cog_var_industry$R3JLIND)
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R4COG27, Industry = all_cog_var_industry$R4JLIND))
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R5COG27, Industry = all_cog_var_industry$R5JLIND))
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R6COG27, Industry = all_cog_var_industry$R6JLIND))
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R7COG27, Industry = all_cog_var_industry$R7JLIND))
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R8COG27, Industry = all_cog_var_industry$R8JLIND))
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R9COG27, Industry = all_cog_var_industry$R9JLIND))
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R10COG27, Industry = all_cog_var_industry$R10JLIND))
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R11COG27, Industry = all_cog_var_industry$R11JLIND))
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R12COG27, Industry = all_cog_var_industry$R12JLIND))
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R13COG27, Industry = all_cog_var_industry$R13JLIND))
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R14COG27, Industry = all_cog_var_industry$R14JLIND))
+all_cog_var_industry_pivot <- rbind(all_cog_var_industry_pivot, data.frame(ID = all_cog_var_industry$HHIDPN, Weight = all_cog_var_industry$weight, 
+                                                                           Score = all_cog_var_industry$R15COG27, Industry = all_cog_var_industry$R15JLIND))
+
+all_cog_var_industry_pivot<- na.omit(all_cog_var_industry_pivot)
+all_cog_var_industry_pivot <- all_cog_var_industry_pivot[!is.na(all_cog_var_industry_pivot$Weight), ]
+ggplot(all_cog_var_industry_pivot, aes(x = factor(Industry), y = Score, weight = Weight))+
+  geom_boxplot()+
+  labs(title = "Box plot of Cognition Scores Based off of Industry")
+
+
+all_cog_var_lonely <- subset(HRS, select = c(HHIDPN,
+                                             R9WTRESP,
+                                             R10WTRESP,
+                                             R11WTRESP,
+                                             R12WTRESP,
+                                             R13WTRESP,
+                                             R14WTRESP,
+                                             R15WTRESP,
+                                             R9COG27,
+                                             R10COG27,
+                                             R11COG27,
+                                             R12COG27,
+                                             R13COG27,
+                                             R14COG27,
+                                             R15COG27,
+                                             R9AGEY_E,
+                                             R10AGEY_E,
+                                             R11AGEY_E,
+                                             R12AGEY_E,
+                                             R13AGEY_E,
+                                             R14AGEY_E,
+                                             R15AGEY_E,
+                                             R9LBLONELY11,
+                                             R10LBLONELY11,
+                                             R11LBLONELY11,
+                                             R12LBLONELY11,
+                                             R13LBLONELY11,
+                                             R14LBLONELY11,
+                                             R15LBLONELY11))
+
+all_cog_var_lonely <- all_cog_var_lonely %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R9WTRESP) & R9WTRESP != 0 ~ R9WTRESP,
+    TRUE ~ 0
+  ))
+
+all_cog_var_lonely_pivot <- data.frame(ID = all_cog_var_lonely$HHIDPN, Weight = all_cog_var_lonely$weight, Score = all_cog_var_lonely$R9COG27, Age = all_cog_var_lonely$R9AGEY_E,Lonely = all_cog_var_lonely$R9LBLONELY11)
+all_cog_var_lonely_pivot <- rbind(all_cog_var_lonely_pivot, data.frame(ID = all_cog_var_lonely$HHIDPN, Weight = all_cog_var_lonely$weight, 
+                                                                       Score = all_cog_var_lonely$R10COG27, Age = all_cog_var_lonely$R10AGEY_E,Lonely = all_cog_var_lonely$R10LBLONELY11))
+all_cog_var_lonely_pivot <- rbind(all_cog_var_lonely_pivot, data.frame(ID = all_cog_var_lonely$HHIDPN, Weight = all_cog_var_lonely$weight, 
+                                                                       Score = all_cog_var_lonely$R11COG27, Age = all_cog_var_lonely$R11AGEY_E,Lonely = all_cog_var_lonely$R11LBLONELY11))
+all_cog_var_lonely_pivot <- rbind(all_cog_var_lonely_pivot, data.frame(ID = all_cog_var_lonely$HHIDPN, Weight = all_cog_var_lonely$weight, 
+                                                                       Score = all_cog_var_lonely$R12COG27, Age = all_cog_var_lonely$R12AGEY_E,Lonely = all_cog_var_lonely$R12LBLONELY11))
+all_cog_var_lonely_pivot <- rbind(all_cog_var_lonely_pivot, data.frame(ID = all_cog_var_lonely$HHIDPN, Weight = all_cog_var_lonely$weight, 
+                                                                       Score = all_cog_var_lonely$R13COG27, Age = all_cog_var_lonely$R13AGEY_E,Lonely = all_cog_var_lonely$R13LBLONELY11))
+all_cog_var_lonely_pivot <- rbind(all_cog_var_lonely_pivot, data.frame(ID = all_cog_var_lonely$HHIDPN, Weight = all_cog_var_lonely$weight, 
+                                                                       Score = all_cog_var_lonely$R14COG27, Age = all_cog_var_lonely$R14AGEY_E,Lonely = all_cog_var_lonely$R14LBLONELY11))
+all_cog_var_lonely_pivot <- rbind(all_cog_var_lonely_pivot, data.frame(ID = all_cog_var_lonely$HHIDPN, Weight = all_cog_var_lonely$weight, 
+                                                                       Score = all_cog_var_lonely$R15COG27, Age = all_cog_var_lonely$R15AGEY_E,Lonely = all_cog_var_lonely$R15LBLONELY11))
+
+all_cog_var_lonely_pivot<- na.omit(all_cog_var_lonely_pivot)
+all_cog_var_lonely_pivot <- all_cog_var_lonely_pivot[!is.na(all_cog_var_lonely_pivot$Weight), ]
+
+all_cog_var_lonely_pivot <- all_cog_var_lonely_pivot %>%
+  mutate(Lonely_Category = case_when(
+    Lonely < 1.5 ~ 1,
+    Lonely < 2 ~ 2,
+    Lonely < 2.5 ~ 3,
+    TRUE ~ 4
+  ))
+
+all_cog_var_lonely_pivot <- all_cog_var_lonely_pivot %>%
+  mutate(Age_group = case_when(
+    Age < 65 ~ "50-65",
+    Age < 80 ~ "65-80",
+    TRUE ~ "80+"
+  ))
+
+ggplot(all_cog_var_lonely_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(Lonely_Category)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#dbe4ee", "#81a4cd", "#3e7cb1", "#054a91"),
+                    name = "Score on 11 Question  Loneliness Scale",
+                    labels = c("1-1.5 Points", "1.5-2 Points", "2-2.5 Points", "2.5-3 Points"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Frequency of Loneliness",
+       x = "Age Group",
+       y = "Cognition Score")
+
+
+all_cog_var_stress <- subset(HRS, select = c(HHIDPN,
+                                             R8WTRESP,
+                                             R10WTRESP,
+                                             R11WTRESP,
+                                             R12WTRESP,
+                                             R13WTRESP,
+                                             R14WTRESP,
+                                             R15WTRESP,
+                                             R8COG27,
+                                             R10COG27,
+                                             R11COG27,
+                                             R12COG27,
+                                             R13COG27,
+                                             R14COG27,
+                                             R15COG27,
+                                             R8AGEY_E,
+                                             R10AGEY_E,
+                                             R11AGEY_E,
+                                             R12AGEY_E,
+                                             R13AGEY_E,
+                                             R14AGEY_E,
+                                             R15AGEY_E,
+                                             R8LBONCHRSTR,
+                                             R10LBONCHRSTR,
+                                             R11LBONCHRSTR,
+                                             R12LBONCHRSTR,
+                                             R13LBONCHRSTR,
+                                             R14LBONCHRSTR,
+                                             R15LBONCHRSTR))
+all_cog_var_stress <- all_cog_var_stress %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R8WTRESP) & R8WTRESP != 0 ~ R8WTRESP,
+    TRUE ~ 0
+  ))
+
+all_cog_var_stress_pivot <- data.frame(ID = all_cog_var_stress$HHIDPN, Weight = all_cog_var_stress$weight, Score = all_cog_var_stress$R8COG27, Age = all_cog_var_stress$R8AGEY_E, Stress = all_cog_var_stress$R8LBONCHRSTR)
+all_cog_var_stress_pivot <- rbind(all_cog_var_stress_pivot, data.frame(ID = all_cog_var_stress$HHIDPN, Weight = all_cog_var_stress$weight,
+                                                                       Score = all_cog_var_stress$R10COG27, Age = all_cog_var_stress$R10AGEY_E, Stress = all_cog_var_stress$R10LBONCHRSTR))
+all_cog_var_stress_pivot <- rbind(all_cog_var_stress_pivot, data.frame(ID = all_cog_var_stress$HHIDPN, Weight = all_cog_var_stress$weight,
+                                                                       Score = all_cog_var_stress$R11COG27, Age = all_cog_var_stress$R11AGEY_E, Stress = all_cog_var_stress$R11LBONCHRSTR))
+all_cog_var_stress_pivot <- rbind(all_cog_var_stress_pivot, data.frame(ID = all_cog_var_stress$HHIDPN, Weight = all_cog_var_stress$weight,
+                                                                       Score = all_cog_var_stress$R12COG27, Age = all_cog_var_stress$R12AGEY_E, Stress = all_cog_var_stress$R12LBONCHRSTR))
+all_cog_var_stress_pivot <- rbind(all_cog_var_stress_pivot, data.frame(ID = all_cog_var_stress$HHIDPN, Weight = all_cog_var_stress$weight,
+                                                                       Score = all_cog_var_stress$R13COG27, Age = all_cog_var_stress$R13AGEY_E, Stress = all_cog_var_stress$R13LBONCHRSTR))
+all_cog_var_stress_pivot <- rbind(all_cog_var_stress_pivot, data.frame(ID = all_cog_var_stress$HHIDPN, Weight = all_cog_var_stress$weight,
+                                                                       Score = all_cog_var_stress$R14COG27, Age = all_cog_var_stress$R14AGEY_E, Stress = all_cog_var_stress$R14LBONCHRSTR))
+all_cog_var_stress_pivot <- rbind(all_cog_var_stress_pivot, data.frame(ID = all_cog_var_stress$HHIDPN, Weight = all_cog_var_stress$weight,
+                                                                       Score = all_cog_var_stress$R15COG27, Age = all_cog_var_stress$R15AGEY_E, Stress = all_cog_var_stress$R15LBONCHRSTR))
+
+all_cog_var_stress_pivot <- all_cog_var_stress_pivot %>%
+  mutate(Age_group = case_when(
+    Age < 65 ~ "50-65",
+    Age < 80 ~ "65-80",
+    TRUE ~ "80+"
+  ))
+
+all_cog_var_stress_pivot <- all_cog_var_stress_pivot %>%
+  mutate(Num_Stress = case_when(
+    Stress < 1 ~ 0,
+    Stress < 2 ~ 1,
+    TRUE ~ 2
+  ))
+
+all_cog_var_stress_pivot<- na.omit(all_cog_var_stress_pivot)
+all_cog_var_stress_pivot <- all_cog_var_stress_pivot[!is.na(all_cog_var_stress_pivot$Weight), ]
+
+ggplot(all_cog_var_stress_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(Num_Stress)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#dbe4ee", "#81a4cd", "#3e7cb1"),
+                    name = "Number of Chronic Stressers in Life",
+                    labels = c("0 Stressers", "1 Stressers", "2 or More Stressers"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Number of Chronic Stressers",
+       x = "Age Group",
+       y = "Cognition Score")
+
+
+all_cog_sleep <- subset(HRS, select = c(HHIDPN,
+                                        R6WTRESP,
+                                        R7WTRESP,
+                                        R8WTRESP,
+                                        R9WTRESP,
+                                        R10WTRESP,
+                                        R11WTRESP,
+                                        R12WTRESP,
+                                        R13WTRESP,
+                                        R14WTRESP,
+                                        R15WTRESP,
+                                        R6COG27,
+                                        R7COG27,
+                                        R8COG27,
+                                        R9COG27,
+                                        R10COG27,
+                                        R11COG27,
+                                        R12COG27,
+                                        R13COG27,
+                                        R14COG27,
+                                        R15COG27,
+                                        R6AGEY_E,
+                                        R7AGEY_E,
+                                        R8AGEY_E,
+                                        R9AGEY_E,
+                                        R10AGEY_E,
+                                        R11AGEY_E,
+                                        R12AGEY_E,
+                                        R13AGEY_E,
+                                        R14AGEY_E,
+                                        R15AGEY_E,
+                                        R6SLEEPFAL,
+                                        R7SLEEPFAL,
+                                        R8SLEEPFAL,
+                                        R9SLEEPFAL,
+                                        R10SLEEPFAL,
+                                        R11SLEEPFAL,
+                                        R12SLEEPFAL,
+                                        R13SLEEPFAL,
+                                        R14SLEEPFAL,
+                                        R15SLEEPFAL,
+                                        R6SLEEPWKN,
+                                        R7SLEEPWKN,
+                                        R8SLEEPWKN,
+                                        R9SLEEPWKN,
+                                        R10SLEEPWKN,
+                                        R11SLEEPWKN,
+                                        R12SLEEPWKN,
+                                        R13SLEEPWKN,
+                                        R14SLEEPWKN,
+                                        R15SLEEPWKN,
+                                        R6SLEEPWKE,
+                                        R7SLEEPWKE,
+                                        R8SLEEPWKE,
+                                        R9SLEEPWKE,
+                                        R10SLEEPWKE,
+                                        R11SLEEPWKE,
+                                        R12SLEEPWKE,
+                                        R13SLEEPWKE,
+                                        R14SLEEPWKE,
+                                        R15SLEEPWKE))
+all_cog_sleep <- all_cog_sleep %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R9WTRESP) & R9WTRESP != 0 ~ R9WTRESP,
+    !is.na(R8WTRESP) & R8WTRESP != 0 ~ R8WTRESP,
+    !is.na(R7WTRESP) & R7WTRESP != 0 ~ R7WTRESP,
+    !is.na(R6WTRESP) & R6WTRESP != 0 ~ R6WTRESP,
+    TRUE ~ 0
+  ))
+
+all_cog_sleep_pivot <- data.frame(ID = all_cog_sleep$HHIDPN, Weight = all_cog_sleep$weight, Score = all_cog_sleep$R6COG27, Age = all_cog_sleep$R6AGEY_E, fall = all_cog_sleep$R6SLEEPFAL, wakenight = all_cog_sleep$R6SLEEPWKN, early = all_cog_sleep$R6SLEEPWKE)
+all_cog_sleep_pivot <- rbind(all_cog_sleep_pivot, data.frame(ID = all_cog_sleep$HHIDPN, Weight = all_cog_sleep$weight, 
+                                                             Score = all_cog_sleep$R7COG27, Age = all_cog_sleep$R7AGEY_E, fall = all_cog_sleep$R7SLEEPFAL, 
+                                                             wakenight = all_cog_sleep$R7SLEEPWKN, early = all_cog_sleep$R7SLEEPWKE))
+all_cog_sleep_pivot <- rbind(all_cog_sleep_pivot, data.frame(ID = all_cog_sleep$HHIDPN, Weight = all_cog_sleep$weight, 
+                                                             Score = all_cog_sleep$R8COG27, Age = all_cog_sleep$R8AGEY_E, fall = all_cog_sleep$R8SLEEPFAL, 
+                                                             wakenight = all_cog_sleep$R8SLEEPWKN, early = all_cog_sleep$R8SLEEPWKE))
+all_cog_sleep_pivot <- rbind(all_cog_sleep_pivot, data.frame(ID = all_cog_sleep$HHIDPN, Weight = all_cog_sleep$weight, 
+                                                             Score = all_cog_sleep$R9COG27, Age = all_cog_sleep$R9AGEY_E, fall = all_cog_sleep$R9SLEEPFAL, 
+                                                             wakenight = all_cog_sleep$R9SLEEPWKN, early = all_cog_sleep$R9SLEEPWKE))
+all_cog_sleep_pivot <- rbind(all_cog_sleep_pivot, data.frame(ID = all_cog_sleep$HHIDPN, Weight = all_cog_sleep$weight, 
+                                                             Score = all_cog_sleep$R10COG27, Age = all_cog_sleep$R10AGEY_E, fall = all_cog_sleep$R10SLEEPFAL, 
+                                                             wakenight = all_cog_sleep$R10SLEEPWKN, early = all_cog_sleep$R10SLEEPWKE))
+all_cog_sleep_pivot <- rbind(all_cog_sleep_pivot, data.frame(ID = all_cog_sleep$HHIDPN, Weight = all_cog_sleep$weight, 
+                                                             Score = all_cog_sleep$R11COG27, Age = all_cog_sleep$R11AGEY_E, fall = all_cog_sleep$R11SLEEPFAL, 
+                                                             wakenight = all_cog_sleep$R11SLEEPWKN, early = all_cog_sleep$R11SLEEPWKE))
+all_cog_sleep_pivot <- rbind(all_cog_sleep_pivot, data.frame(ID = all_cog_sleep$HHIDPN, Weight = all_cog_sleep$weight, 
+                                                             Score = all_cog_sleep$R12COG27, Age = all_cog_sleep$R12AGEY_E, fall = all_cog_sleep$R12SLEEPFAL, 
+                                                             wakenight = all_cog_sleep$R12SLEEPWKN, early = all_cog_sleep$R12SLEEPWKE))
+all_cog_sleep_pivot <- rbind(all_cog_sleep_pivot, data.frame(ID = all_cog_sleep$HHIDPN, Weight = all_cog_sleep$weight, 
+                                                             Score = all_cog_sleep$R13COG27, Age = all_cog_sleep$R13AGEY_E, fall = all_cog_sleep$R13SLEEPFAL, 
+                                                             wakenight = all_cog_sleep$R13SLEEPWKN, early = all_cog_sleep$R13SLEEPWKE))
+all_cog_sleep_pivot <- rbind(all_cog_sleep_pivot, data.frame(ID = all_cog_sleep$HHIDPN, Weight = all_cog_sleep$weight, 
+                                                             Score = all_cog_sleep$R14COG27, Age = all_cog_sleep$R14AGEY_E, fall = all_cog_sleep$R14SLEEPFAL, 
+                                                             wakenight = all_cog_sleep$R14SLEEPWKN, early = all_cog_sleep$R14SLEEPWKE))
+all_cog_sleep_pivot <- rbind(all_cog_sleep_pivot, data.frame(ID = all_cog_sleep$HHIDPN, Weight = all_cog_sleep$weight, 
+                                                             Score = all_cog_sleep$R15COG27, Age = all_cog_sleep$R15AGEY_E, fall = all_cog_sleep$R15SLEEPFAL, 
+                                                             wakenight = all_cog_sleep$R15SLEEPWKN, early = all_cog_sleep$R15SLEEPWKE))
+all_cog_sleep_pivot<- na.omit(all_cog_sleep_pivot)
+all_cog_sleep_pivot <- all_cog_sleep_pivot[!is.na(all_cog_sleep_pivot$Weight), ]
+
+all_cog_sleep_pivot <- all_cog_sleep_pivot %>%
+  mutate(Age_group = case_when(
+    Age < 65 ~ "50-65",
+    Age < 80 ~ "65-80",
+    TRUE ~ "80+"
+  ))
+
+ggplot(all_cog_sleep_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(fall)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#dbe4ee", "#81a4cd", "#3e7cb1"),
+                    name = "Trouble Falling Asleep",
+                    labels = c("Most of the Time", "Sometimes", "Rarely or Never"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Whether They Have Trouble Falling Asleep",
+       x = "Age Group",
+       y = "Cognition Score")
+
+ggplot(all_cog_sleep_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(wakenight)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#dbe4ee", "#81a4cd", "#3e7cb1"),
+                    name = "Waking Up During Night",
+                    labels = c("Most of the Time", "Sometimes", "Rarely or Never"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Whether They Wake Up During the Night",
+       x = "Age Group",
+       y = "Cognition Score")
+
+ggplot(all_cog_sleep_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(early)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#dbe4ee", "#81a4cd", "#3e7cb1"),
+                    name = "Waking Up During Night",
+                    labels = c("Most of the Time", "Sometimes", "Rarely or Never"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Whether They Wake Up Too Early",
+       x = "Age Group",
+       y = "Cognition Score")
+
+
+
+
+
+#------------Feb 16th------------
+
+library(lme4)
+library(WeMix)
+
+library(dplyr)
+all_cog_var_exercise <- subset(HRS, select = c(HHIDPN,
+                                               R7VGACTX,
+                                               R8VGACTX,
+                                               R9VGACTX,
+                                               R10VGACTX,
+                                               R11VGACTX,
+                                               R12VGACTX,
+                                               R13VGACTX,
+                                               R14VGACTX,
+                                               R15VGACTX,
+                                               R7MDACTX,
+                                               R8MDACTX,
+                                               R9MDACTX,
+                                               R10MDACTX,
+                                               R11MDACTX,
+                                               R12MDACTX,
+                                               R13MDACTX,
+                                               R14MDACTX,
+                                               R15MDACTX,
+                                               R7LTACTX,
+                                               R8LTACTX,
+                                               R9LTACTX,
+                                               R10LTACTX,
+                                               R11LTACTX,
+                                               R12LTACTX,
+                                               R13LTACTX,
+                                               R14LTACTX,
+                                               R15LTACTX,
+                                               R7WTRESP,
+                                               R8WTRESP,
+                                               R9WTRESP,
+                                               R10WTRESP,
+                                               R11WTRESP,
+                                               R12WTRESP,
+                                               R13WTRESP,
+                                               R14WTRESP,
+                                               R15WTRESP,
+                                               R7COG27,
+                                               R8COG27,
+                                               R9COG27,
+                                               R10COG27,
+                                               R11COG27,
+                                               R12COG27,
+                                               R13COG27,
+                                               R14COG27,
+                                               R15COG27,
+                                               R7AGEY_E,
+                                               R8AGEY_E,
+                                               R9AGEY_E,
+                                               R10AGEY_E,
+                                               R11AGEY_E,
+                                               R12AGEY_E,
+                                               R13AGEY_E,
+                                               R14AGEY_E,
+                                               R15AGEY_E))
+all_cog_var_exercise <- all_cog_var_exercise %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R9WTRESP) & R9WTRESP != 0 ~ R9WTRESP,
+    !is.na(R8WTRESP) & R8WTRESP != 0 ~ R8WTRESP,
+    !is.na(R7WTRESP) & R7WTRESP != 0 ~ R7WTRESP,
+    TRUE ~ 0
+  ))
+
+all_cog_var_exercise_pivot <- data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R7COG27 , Age = all_cog_var_exercise$R7AGEY_E, Vigorous = all_cog_var_exercise$R7VGACTX, Moderate = all_cog_var_exercise$R7MDACTX, Light = all_cog_var_exercise$R7LTACTX)
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R8COG27 , Age = all_cog_var_exercise$R8AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R8VGACTX, Moderate = all_cog_var_exercise$R8MDACTX, Light = all_cog_var_exercise$R8LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R9COG27 , Age = all_cog_var_exercise$R9AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R9VGACTX, Moderate = all_cog_var_exercise$R9MDACTX, Light = all_cog_var_exercise$R9LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R10COG27 , Age = all_cog_var_exercise$R10AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R10VGACTX, Moderate = all_cog_var_exercise$R10MDACTX, Light = all_cog_var_exercise$R10LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R11COG27 , Age = all_cog_var_exercise$R11AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R11VGACTX, Moderate = all_cog_var_exercise$R11MDACTX, Light = all_cog_var_exercise$R11LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R12COG27 , Age = all_cog_var_exercise$R12AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R12VGACTX, Moderate = all_cog_var_exercise$R12MDACTX, Light = all_cog_var_exercise$R12LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R13COG27 , Age = all_cog_var_exercise$R13AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R13VGACTX, Moderate = all_cog_var_exercise$R13MDACTX, Light = all_cog_var_exercise$R13LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R14COG27 , Age = all_cog_var_exercise$R14AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R14VGACTX, Moderate = all_cog_var_exercise$R14MDACTX, Light = all_cog_var_exercise$R14LTACTX))
+all_cog_var_exercise_pivot <- rbind(all_cog_var_exercise_pivot, data.frame(ID = all_cog_var_exercise$HHIDPN, Weight = all_cog_var_exercise$weight,Score = all_cog_var_exercise$R15COG27 , Age = all_cog_var_exercise$R15AGEY_E,
+                                                                           Vigorous = all_cog_var_exercise$R15VGACTX, Moderate = all_cog_var_exercise$R15MDACTX, Light = all_cog_var_exercise$R15LTACTX))
+all_cog_var_exercise_pivot <- all_cog_var_exercise_pivot[,c(1,2,3,4,7)]
+
+all_cog_var_exercise_pivot<- na.omit(all_cog_var_exercise_pivot)
+all_cog_var_exercise_pivot <- all_cog_var_exercise_pivot[!is.na(all_cog_var_exercise_pivot$Weight), ]
+
+rm(HRS)
+rm(all_cog_var_exercise)
+
+#standardize weights
+
+weight_sum <- sum(all_cog_var_exercise_pivot$Weight)
+all_cog_var_exercise_pivot$Weight <- all_cog_var_exercise_pivot$Weight/weight_sum
+
+rm(weight_sum)
+
+all_cog_var_exercise_pivot$age.minus.55 <- all_cog_var_exercise_pivot$Age -55
+all_cog_var_exercise_pivot <- all_cog_var_exercise_pivot[,c(1,2,3,5,6)]
+
+all_cog_var_exercise_pivot <- all_cog_var_exercise_pivot %>%
+  mutate(exercise_freq = case_when(
+    Light >= 4 ~ 2,
+    Light >= 2 ~ 1,
+    TRUE ~ 0
+  ))
+
+all_cog_var_exercise_pivot <- all_cog_var_exercise_pivot[,c(1,2,3,5,6)]
+
+all_cog_var_exercise_pivot$Weight2 <- 1
+#mix(Score ~ age.minus.55 + exercise_freq + (1|ID), data = all_cog_var_exercise_pivot, weights = c("Weight", "Weight2"))
+#Doesnt work
+
+write.csv(all_cog_var_exercise_pivot,"~all_cog_var_exercise_pivot.csv", row.names = TRUE)
+
+# -----------
+
+
+library(dplyr)
+all_cog_var <- subset(HRS, select = c(HHIDPN, R3COG27,
+                                      R3AGEY_E,
+                                      R3SMOKEN,
+                                      R4COG27,
+                                      R4AGEY_E,
+                                      R4SMOKEN,
+                                      R5COG27,
+                                      R5AGEY_E,
+                                      R5SMOKEN,
+                                      R6COG27,
+                                      R6AGEY_E,
+                                      R6SMOKEN,
+                                      R7COG27,
+                                      R7AGEY_E,
+                                      R7SMOKEN,
+                                      R8COG27,
+                                      R8AGEY_E,
+                                      R8SMOKEN,
+                                      R9COG27,
+                                      R9AGEY_E,
+                                      R9SMOKEN,
+                                      R10COG27,
+                                      R10AGEY_E,
+                                      R10SMOKEN,
+                                      R11COG27,
+                                      R11AGEY_E,
+                                      R11SMOKEN,
+                                      R12COG27,
+                                      R12AGEY_E,
+                                      R12SMOKEN,
+                                      R13COG27,
+                                      R13AGEY_E,
+                                      R13SMOKEN,
+                                      R14COG27,
+                                      R14AGEY_E,
+                                      R14SMOKEN,
+                                      R15COG27,
+                                      R15AGEY_E,
+                                      R15SMOKEN,
+                                      R3WTRESP,
+                                      R4WTRESP,
+                                      R5WTRESP,
+                                      R6WTRESP,
+                                      R7WTRESP,
+                                      R8WTRESP,
+                                      R9WTRESP,
+                                      R10WTRESP,
+                                      R11WTRESP,
+                                      R12WTRESP,
+                                      R13WTRESP,
+                                      R14WTRESP,
+                                      R15WTRESP,
+                                      R3CESD,
+                                      R4CESD,
+                                      R5CESD,
+                                      R6CESD,
+                                      R7CESD,
+                                      R8CESD,
+                                      R9CESD,
+                                      R10CESD,
+                                      R11CESD,
+                                      R12CESD,
+                                      R13CESD,
+                                      R14CESD,
+                                      R15CESD,
+                                      RAHISPAN,
+                                      RAEDEGRM,
+                                      R3DIABE,
+                                      R4DIABE,
+                                      R5DIABE,
+                                      R6DIABE,
+                                      R7DIABE,
+                                      R8DIABE,
+                                      R9DIABE,
+                                      R10DIABE,
+                                      R11DIABE,
+                                      R12DIABE,
+                                      R13DIABE,
+                                      R14DIABE,
+                                      R15DIABE,
+                                      R3BMI,
+                                      R4BMI,
+                                      R5BMI,
+                                      R6BMI,
+                                      R7BMI,
+                                      R8BMI,
+                                      R9BMI,
+                                      R10BMI,
+                                      R11BMI,
+                                      R12BMI,
+                                      R13BMI,
+                                      R14BMI,
+                                      R15BMI,
+                                      RAESTRAT,
+                                      RAEHSAMP,
+                                      R7LTACTX,
+                                      R8LTACTX,
+                                      R9LTACTX,
+                                      R10LTACTX,
+                                      R11LTACTX,
+                                      R12LTACTX,
+                                      R13LTACTX,
+                                      R14LTACTX,
+                                      R15LTACTX,
+                                      R7SLEEPWKE,
+                                      R8SLEEPWKE,
+                                      R9SLEEPWKE,
+                                      R10SLEEPWKE,
+                                      R11SLEEPWKE,
+                                      R12SLEEPWKE,
+                                      R13SLEEPWKE,
+                                      R14SLEEPWKE,
+                                      R15SLEEPWKE,
+                                      R7SLEEPFAL,
+                                      R8SLEEPFAL,
+                                      R9SLEEPFAL,
+                                      R10SLEEPFAL,
+                                      R11SLEEPFAL,
+                                      R12SLEEPFAL,
+                                      R13SLEEPFAL,
+                                      R14SLEEPFAL,
+                                      R15SLEEPFAL,
+                                      R3HIBPE,
+                                      R4HIBPE,
+                                      R5HIBPE,
+                                      R6HIBPE,
+                                      R7HIBPE,
+                                      R8HIBPE,
+                                      R9HIBPE,
+                                      R10HIBPE,
+                                      R11HIBPE,
+                                      R12HIBPE,
+                                      R13HIBPE,
+                                      R14HIBPE,
+                                      R15HIBPE,
+                                      R3PSYCHE,
+                                      R4PSYCHE,
+                                      R5PSYCHE,
+                                      R6PSYCHE,
+                                      R7PSYCHE,
+                                      R8PSYCHE,
+                                      R9PSYCHE,
+                                      R10PSYCHE,
+                                      R11PSYCHE,
+                                      R12PSYCHE,
+                                      R13PSYCHE,
+                                      R14PSYCHE,
+                                      R15PSYCHE,
+                                      R3DRINKN,
+                                      R4DRINKN,
+                                      R5DRINKN,
+                                      R6DRINKN,
+                                      R7DRINKN,
+                                      R8DRINKN,
+                                      R9DRINKN,
+                                      R10DRINKN,
+                                      R11DRINKN,
+                                      R12DRINKN,
+                                      R13DRINKN,
+                                      R14DRINKN,
+                                      R15DRINKN))
+
+library(dplyr)
+all_cog_var <- all_cog_var %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R9WTRESP) & R9WTRESP != 0 ~ R9WTRESP,
+    !is.na(R8WTRESP) & R8WTRESP != 0 ~ R8WTRESP,
+    !is.na(R7WTRESP) & R7WTRESP != 0 ~ R7WTRESP,
+    TRUE ~ 0
+  ))
+#---Wave 7 and on---
+all_cog_var_pivot <- data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R7COG27, Age = all_cog_var$R7AGEY_E, Smoke = all_cog_var$R7SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R7CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R7DIABE, BMI = all_cog_var$R7BMI, Exercise = all_cog_var$R7LTACTX, Early = all_cog_var$R7SLEEPWKE, fall = all_cog_var$R7SLEEPFAL, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R7HIBPE, Psych_Problems = all_cog_var$R7PSYCHE, Drinks_day = all_cog_var$R7DRINKN)
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R8COG27, Age = all_cog_var$R8AGEY_E, Smoke = all_cog_var$R8SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R8CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R8DIABE, BMI = all_cog_var$R8BMI, Exercise = all_cog_var$R8LTACTX, Early = all_cog_var$R8SLEEPWKE, fall = all_cog_var$R8SLEEPFAL, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R8HIBPE, Psych_Problems = all_cog_var$R8PSYCHE, Drinks_day = all_cog_var$R8DRINKN))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R9COG27, Age = all_cog_var$R9AGEY_E, Smoke = all_cog_var$R9SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R9CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R9DIABE, BMI = all_cog_var$R9BMI, Exercise = all_cog_var$R9LTACTX, Early = all_cog_var$R9SLEEPWKE, fall = all_cog_var$R9SLEEPFAL, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R9HIBPE, Psych_Problems = all_cog_var$R9PSYCHE, Drinks_day = all_cog_var$R9DRINKN))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R10COG27, Age = all_cog_var$R10AGEY_E, Smoke = all_cog_var$R10SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R10CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R10DIABE, BMI = all_cog_var$R10BMI, Exercise = all_cog_var$R10LTACTX, Early = all_cog_var$R10SLEEPWKE, fall = all_cog_var$R10SLEEPFAL, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R10HIBPE, Psych_Problems = all_cog_var$R10PSYCHE, Drinks_day = all_cog_var$R10DRINKN))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R11COG27, Age = all_cog_var$R11AGEY_E, Smoke = all_cog_var$R11SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R11CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R11DIABE, BMI = all_cog_var$R11BMI, Exercise = all_cog_var$R11LTACTX, Early = all_cog_var$R11SLEEPWKE, fall = all_cog_var$R11SLEEPFAL, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R11HIBPE, Psych_Problems = all_cog_var$R11PSYCHE, Drinks_day = all_cog_var$R11DRINKN))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R12COG27, Age = all_cog_var$R12AGEY_E, Smoke = all_cog_var$R12SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R12CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R12DIABE, BMI = all_cog_var$R12BMI, Exercise = all_cog_var$R12LTACTX, Early = all_cog_var$R12SLEEPWKE, fall = all_cog_var$R12SLEEPFAL, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R12HIBPE, Psych_Problems = all_cog_var$R12PSYCHE, Drinks_day = all_cog_var$R12DRINKN))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R13COG27, Age = all_cog_var$R13AGEY_E, Smoke = all_cog_var$R13SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R13CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R13DIABE, BMI = all_cog_var$R13BMI, Exercise = all_cog_var$R13LTACTX, Early = all_cog_var$R13SLEEPWKE, fall = all_cog_var$R13SLEEPFAL, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R13HIBPE, Psych_Problems = all_cog_var$R13PSYCHE, Drinks_day = all_cog_var$R13DRINKN))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R14COG27, Age = all_cog_var$R14AGEY_E, Smoke = all_cog_var$R14SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R14CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R14DIABE, BMI = all_cog_var$R14BMI, Exercise = all_cog_var$R14LTACTX, Early = all_cog_var$R14SLEEPWKE, fall = all_cog_var$R14SLEEPFAL, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R14HIBPE, Psych_Problems = all_cog_var$R14PSYCHE, Drinks_day = all_cog_var$R14DRINKN))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R15COG27, Age = all_cog_var$R15AGEY_E, Smoke = all_cog_var$R15SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R15CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R15DIABE, BMI = all_cog_var$R15BMI, Exercise = all_cog_var$R15LTACTX, Early = all_cog_var$R15SLEEPWKE, fall = all_cog_var$R15SLEEPFAL, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R15HIBPE, Psych_Problems = all_cog_var$R15PSYCHE, Drinks_day = all_cog_var$R15DRINKN))
+
+
+
+all_cog_var_pivot$Age.minus.50 = all_cog_var_pivot$Age - 50
+all_cog_var_pivot$Age.minus.55 <- NULL
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Is.depressed = case_when(
+    Depressed < 3 ~ 0,
+    TRUE ~ 1
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Education_Level = case_when(
+    Education == 0 ~ 0,
+    Education < 4 ~ 1,
+    Education < 6 ~ 2,
+    Education < 8 ~ 3,
+    TRUE ~ 5
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(exercise_freq = case_when(
+    Exercise >= 4 ~ 2,
+    Exercise >= 2 ~ 1,
+    TRUE ~ 0
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Trouble.early = case_when(
+    Early > 1 ~ "0",
+    TRUE ~ "1"
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Trouble.fall = case_when(
+    fall > 1 ~ "0",
+    TRUE ~ "1"
+  ))
+#weight_sum <- sum(all_cog_var_pivot$Weight)
+#all_cog_var_pivot$Weight.standardized <- all_cog_var_pivot$Weight/weight_sum
+#all_cog_var_pivot <- all_cog_var_pivot[,c(1,2,4,6,9,10,14,15,16,17,18,19,20,21,22)]
+all_cog_var_pivot <- all_cog_var_pivot[all_cog_var_pivot$Education_Level != 5,]
+all_cog_var_pivot<-na.omit(all_cog_var_pivot)
+#write.csv(all_cog_var_pivot,"~all_cog_var_pivot.csv", row.names = TRUE)
+
+library(ggplot2)
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Age_group2 = case_when(
+    Age < 55 ~ "50-54",
+    Age < 60 ~ "55-59",
+    Age < 65 ~ "60-64",
+    Age < 70 ~ "65-69",
+    Age < 75 ~ "70-74",
+    Age < 80 ~ "75-79",
+    Age < 85 ~ "80-84",
+    Age < 90 ~ "85-89",
+    Age < 95 ~ "90-94",
+    TRUE ~ "95+"
+  ))
+
+ggplot(all_cog_var_pivot, aes(x = Age_group2, y = Score, weight = Weight, fill = factor(Blood_pressure)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("skyblue", "lightcoral"),
+                    name = "Has Ever Had High Blood Pressure",
+                    labels = c("No", "Yes"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Ever Having High Blood Pressure",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+
+ggplot(all_cog_var_pivot, aes(x = Age_group2, y = Score, weight = Weight, fill = factor(Psych_Problems)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("skyblue", "lightcoral"),
+                    name = "Has Ever Had Psych Problems",
+                    labels = c("No", "Yes"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Ever Having Psych Problems",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(heavy_drink= case_when(
+    Drinks_day < 1 ~ 0,
+    Drinks_day < 3 ~ 1,
+    Drinks_day < 5 ~ 2,
+    TRUE ~ 3
+  ))
+
+ggplot(all_cog_var_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(heavy_drink)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#dbe4ee", "#81a4cd", "#3e7cb1", "#054a91"),
+                    name = "How Many Drinks Do You Have When You Drink?",
+                    labels = c("Doesn't Drink", "1-2 Drinks", "3-4 Drinks", "5+ Drinks"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Heavy Drinking",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+
+library(WeMix)
+library(svylme)
+library(survey)
+
+#all_cog_var_pivot$OBS <- seq_len(nrow(all_cog_var_pivot))
+
+#all_cog_var_pivot$SSU <- interaction(
+  all_cog_var_pivot$Stratum,
+  all_cog_var_pivot$Cluster,
+  drop = TRUE
+)
+
+
+#dclus <- svydesign(
+  #ids = ~Stratum+ID+OBS,
+  #weights = ~Weight.standardized,
+ # data = all_cog_var_pivot
+#)
+#rm(HRS)
+#rm(all_cog_var)
+#rm(weight_sum)
+#fit <- svy2lme(
+ # Score ~ Age.minus.55 +
+  #  factor(Smoke) +
+   # factor(exercise_freq) +
+    #factor(Education_Level) +
+  #  (1 | ID),
+#  design = dclus,
+#  method = "nested"
+#)
+
+all_cog_var_pivot$weight2 <- 1
+
+all_cog_var_pivot_small <- all_cog_var_pivot[,c("Score", "Age.minus.55", "Smoke", "exercise_freq", "Education_Level", "ID", "Weight.standardized", "weight2")]
+
+library(data.table)
+data_small <- as.data.table(all_cog_var_pivot_small)
+rm(dclus)
+rm(all_cog_var)
+rm(all_cog_var_pivot_small)
+data_small$ID <- as.factor(data_small$ID )
+
+fit1 <- mix(Score~Age.minus.55 + factor(Smoke) + factor(exercise_freq)+ factor(Education_Level)+(1|ID), 
+            data = data_small,
+            weights = c("Weight.standardized", "weight2"))
+
+
+##--##
+library(dplyr)
+all_cog_var <- subset(HRS, select = c(HHIDPN, R3COG27,
+                                      R3AGEY_E,
+                                      R3SMOKEN,
+                                      R4COG27,
+                                      R4AGEY_E,
+                                      R4SMOKEN,
+                                      R5COG27,
+                                      R5AGEY_E,
+                                      R5SMOKEN,
+                                      R6COG27,
+                                      R6AGEY_E,
+                                      R6SMOKEN,
+                                      R7COG27,
+                                      R7AGEY_E,
+                                      R7SMOKEN,
+                                      R8COG27,
+                                      R8AGEY_E,
+                                      R8SMOKEN,
+                                      R9COG27,
+                                      R9AGEY_E,
+                                      R9SMOKEN,
+                                      R10COG27,
+                                      R10AGEY_E,
+                                      R10SMOKEN,
+                                      R11COG27,
+                                      R11AGEY_E,
+                                      R11SMOKEN,
+                                      R12COG27,
+                                      R12AGEY_E,
+                                      R12SMOKEN,
+                                      R13COG27,
+                                      R13AGEY_E,
+                                      R13SMOKEN,
+                                      R14COG27,
+                                      R14AGEY_E,
+                                      R14SMOKEN,
+                                      R15COG27,
+                                      R15AGEY_E,
+                                      R15SMOKEN,
+                                      R3WTRESP,
+                                      R4WTRESP,
+                                      R5WTRESP,
+                                      R6WTRESP,
+                                      R7WTRESP,
+                                      R8WTRESP,
+                                      R9WTRESP,
+                                      R10WTRESP,
+                                      R11WTRESP,
+                                      R12WTRESP,
+                                      R13WTRESP,
+                                      R14WTRESP,
+                                      R15WTRESP,
+                                      R3CESD,
+                                      R4CESD,
+                                      R5CESD,
+                                      R6CESD,
+                                      R7CESD,
+                                      R8CESD,
+                                      R9CESD,
+                                      R10CESD,
+                                      R11CESD,
+                                      R12CESD,
+                                      R13CESD,
+                                      R14CESD,
+                                      R15CESD,
+                                      RAHISPAN,
+                                      RAEDEGRM,
+                                      R3DIABE,
+                                      R4DIABE,
+                                      R5DIABE,
+                                      R6DIABE,
+                                      R7DIABE,
+                                      R8DIABE,
+                                      R9DIABE,
+                                      R10DIABE,
+                                      R11DIABE,
+                                      R12DIABE,
+                                      R13DIABE,
+                                      R14DIABE,
+                                      R15DIABE,
+                                      R3BMI,
+                                      R4BMI,
+                                      R5BMI,
+                                      R6BMI,
+                                      R7BMI,
+                                      R8BMI,
+                                      R9BMI,
+                                      R10BMI,
+                                      R11BMI,
+                                      R12BMI,
+                                      R13BMI,
+                                      R14BMI,
+                                      R15BMI,
+                                      RAESTRAT,
+                                      RAEHSAMP,
+                                      R7LTACTX,
+                                      R8LTACTX,
+                                      R9LTACTX,
+                                      R10LTACTX,
+                                      R11LTACTX,
+                                      R12LTACTX,
+                                      R13LTACTX,
+                                      R14LTACTX,
+                                      R15LTACTX,
+                                      R7SLEEPWKE,
+                                      R8SLEEPWKE,
+                                      R9SLEEPWKE,
+                                      R10SLEEPWKE,
+                                      R11SLEEPWKE,
+                                      R12SLEEPWKE,
+                                      R13SLEEPWKE,
+                                      R14SLEEPWKE,
+                                      R15SLEEPWKE,
+                                      R7SLEEPFAL,
+                                      R8SLEEPFAL,
+                                      R9SLEEPFAL,
+                                      R10SLEEPFAL,
+                                      R11SLEEPFAL,
+                                      R12SLEEPFAL,
+                                      R13SLEEPFAL,
+                                      R14SLEEPFAL,
+                                      R15SLEEPFAL,
+                                      R3HIBPE,
+                                      R4HIBPE,
+                                      R5HIBPE,
+                                      R6HIBPE,
+                                      R7HIBPE,
+                                      R8HIBPE,
+                                      R9HIBPE,
+                                      R10HIBPE,
+                                      R11HIBPE,
+                                      R12HIBPE,
+                                      R13HIBPE,
+                                      R14HIBPE,
+                                      R15HIBPE,
+                                      R3PSYCHE,
+                                      R4PSYCHE,
+                                      R5PSYCHE,
+                                      R6PSYCHE,
+                                      R7PSYCHE,
+                                      R8PSYCHE,
+                                      R9PSYCHE,
+                                      R10PSYCHE,
+                                      R11PSYCHE,
+                                      R12PSYCHE,
+                                      R13PSYCHE,
+                                      R14PSYCHE,
+                                      R15PSYCHE,
+                                      R3DRINKN,
+                                      R4DRINKN,
+                                      R5DRINKN,
+                                      R6DRINKN,
+                                      R7DRINKN,
+                                      R8DRINKN,
+                                      R9DRINKN,
+                                      R10DRINKN,
+                                      R11DRINKN,
+                                      R12DRINKN,
+                                      R13DRINKN,
+                                      R14DRINKN,
+                                      R15DRINKN,
+                                      R3DRINKD,
+                                      R4DRINKD,
+                                      R5DRINKD,
+                                      R6DRINKD,
+                                      R7DRINKD,
+                                      R8DRINKD,
+                                      R9DRINKD,
+                                      R10DRINKD,
+                                      R11DRINKD,
+                                      R12DRINKD,
+                                      R13DRINKD,
+                                      R14DRINKD,
+                                      R15DRINKD,
+                                      R3MSTAT,
+                                      R4MSTAT,
+                                      R5MSTAT,
+                                      R6MSTAT,
+                                      R7MSTAT,
+                                      R8MSTAT,
+                                      R9MSTAT,
+                                      R10MSTAT,
+                                      R11MSTAT,
+                                      R12MSTAT,
+                                      R13MSTAT,
+                                      R14MSTAT,
+                                      R15MSTAT,
+                                      R3URBRUR,
+                                      R4URBRUR,
+                                      R5URBRUR,
+                                      R6URBRUR,
+                                      R7URBRUR,
+                                      R8URBRUR,
+                                      R9URBRUR,
+                                      R10URBRUR,
+                                      R11URBRUR,
+                                      R12URBRUR,
+                                      R13URBRUR,
+                                      R14URBRUR,
+                                      R15URBRUR))
+library(dplyr)
+all_cog_var <- all_cog_var %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R9WTRESP) & R9WTRESP != 0 ~ R9WTRESP,
+    !is.na(R8WTRESP) & R8WTRESP != 0 ~ R8WTRESP,
+    !is.na(R7WTRESP) & R7WTRESP != 0 ~ R7WTRESP,
+    !is.na(R6WTRESP) & R6WTRESP != 0 ~ R6WTRESP,
+    !is.na(R5WTRESP) & R5WTRESP != 0 ~ R5WTRESP,
+    !is.na(R4WTRESP) & R4WTRESP != 0 ~ R4WTRESP,
+    !is.na(R3WTRESP) & R3WTRESP != 0 ~ R3WTRESP,
+    TRUE ~ 0
+  ))
+all_cog_var_pivot <- data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R3COG27, Age = all_cog_var$R3AGEY_E, Smoke = all_cog_var$R3SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R3BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R3HIBPE, Psych_Problems = all_cog_var$R3PSYCHE, Drinks_day = all_cog_var$R3DRINKN, Drinks_a_week = all_cog_var$R3DRINKD, marital_status = all_cog_var$R3MSTAT, urban = all_cog_var$R3URBRUR)
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R4COG27, Age = all_cog_var$R4AGEY_E, Smoke = all_cog_var$R4SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R4BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R4HIBPE, Psych_Problems = all_cog_var$R4PSYCHE, Drinks_day = all_cog_var$R4DRINKN, Drinks_a_week = all_cog_var$R4DRINKD, marital_status = all_cog_var$R4MSTAT, urban = all_cog_var$R4URBRUR))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R5COG27, Age = all_cog_var$R5AGEY_E, Smoke = all_cog_var$R5SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R5BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R5HIBPE, Psych_Problems = all_cog_var$R5PSYCHE, Drinks_day = all_cog_var$R5DRINKN,Drinks_a_week = all_cog_var$R5DRINKD, marital_status = all_cog_var$R5MSTAT, urban = all_cog_var$R5URBRUR))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R6COG27, Age = all_cog_var$R6AGEY_E, Smoke = all_cog_var$R6SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R6BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R6HIBPE, Psych_Problems = all_cog_var$R6PSYCHE, Drinks_day = all_cog_var$R6DRINKN,Drinks_a_week = all_cog_var$R6DRINKD, marital_status = all_cog_var$R6MSTAT, urban = all_cog_var$R6URBRUR))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R7COG27, Age = all_cog_var$R7AGEY_E, Smoke = all_cog_var$R7SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R7BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R7HIBPE, Psych_Problems = all_cog_var$R7PSYCHE, Drinks_day = all_cog_var$R7DRINKN,Drinks_a_week = all_cog_var$R7DRINKD, marital_status = all_cog_var$R7MSTAT, urban = all_cog_var$R7URBRUR))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R8COG27, Age = all_cog_var$R8AGEY_E, Smoke = all_cog_var$R8SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R8BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R8HIBPE, Psych_Problems = all_cog_var$R8PSYCHE, Drinks_day = all_cog_var$R8DRINKN,Drinks_a_week = all_cog_var$R8DRINKD, marital_status = all_cog_var$R8MSTAT, urban = all_cog_var$R8URBRUR))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R9COG27, Age = all_cog_var$R9AGEY_E, Smoke = all_cog_var$R9SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R9BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R9HIBPE, Psych_Problems = all_cog_var$R9PSYCHE, Drinks_day = all_cog_var$R9DRINKN,Drinks_a_week = all_cog_var$R9DRINKD, marital_status = all_cog_var$R9MSTAT, urban = all_cog_var$R9URBRUR))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R10COG27, Age = all_cog_var$R10AGEY_E, Smoke = all_cog_var$R10SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R10BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R10HIBPE, Psych_Problems = all_cog_var$R10PSYCHE, Drinks_day = all_cog_var$R10DRINKN,Drinks_a_week = all_cog_var$R10DRINKD, marital_status = all_cog_var$R10MSTAT, urban = all_cog_var$R10URBRUR))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R11COG27, Age = all_cog_var$R11AGEY_E, Smoke = all_cog_var$R11SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R11BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R11HIBPE, Psych_Problems = all_cog_var$R11PSYCHE, Drinks_day = all_cog_var$R11DRINKN,Drinks_a_week = all_cog_var$R11DRINKD, marital_status = all_cog_var$R11MSTAT, urban = all_cog_var$R11URBRUR))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R12COG27, Age = all_cog_var$R12AGEY_E, Smoke = all_cog_var$R12SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R12BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R12HIBPE, Psych_Problems = all_cog_var$R12PSYCHE, Drinks_day = all_cog_var$R12DRINKN,Drinks_a_week = all_cog_var$R12DRINKD, marital_status = all_cog_var$R12MSTAT, urban = all_cog_var$R12URBRUR))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R13COG27, Age = all_cog_var$R13AGEY_E, Smoke = all_cog_var$R13SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R13BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R13HIBPE, Psych_Problems = all_cog_var$R13PSYCHE, Drinks_day = all_cog_var$R13DRINKN,Drinks_a_week = all_cog_var$R13DRINKD, marital_status = all_cog_var$R13MSTAT, urban = all_cog_var$R13URBRUR))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R14COG27, Age = all_cog_var$R14AGEY_E, Smoke = all_cog_var$R14SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R14BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R14HIBPE, Psych_Problems = all_cog_var$R14PSYCHE, Drinks_day = all_cog_var$R14DRINKN,Drinks_a_week = all_cog_var$R14DRINKD, marital_status = all_cog_var$R14MSTAT, urban = all_cog_var$R14URBRUR))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R15COG27, Age = all_cog_var$R15AGEY_E, Smoke = all_cog_var$R15SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R3CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R3DIABE, BMI = all_cog_var$R15BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R15HIBPE, Psych_Problems = all_cog_var$R15PSYCHE, Drinks_day = all_cog_var$R15DRINKN,Drinks_a_week = all_cog_var$R15DRINKD, marital_status = all_cog_var$R15MSTAT, urban = all_cog_var$R15URBRUR))
+
+library(ggplot2)
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Age_group = case_when(
+    Age < 65 ~ "50-64",
+    Age < 80 ~ "65-79",
+    TRUE ~ "80+"
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Age_group2 = case_when(
+    Age < 55 ~ "50-54",
+    Age < 60 ~ "55-59",
+    Age < 65 ~ "60-64",
+    Age < 70 ~ "65-69",
+    Age < 75 ~ "70-74",
+    Age < 80 ~ "75-79",
+    Age < 85 ~ "80-84",
+    Age < 90 ~ "85-89",
+    Age < 95 ~ "90-94",
+    TRUE ~ "95+"
+  ))
+
+ggplot(all_cog_var_pivot, aes(x = Age_group2, y = Score, weight = Weight, fill = factor(Blood_pressure)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("skyblue", "lightcoral"),
+                    name = "Has Ever Had High Blood Pressure",
+                    labels = c("No", "Yes"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Ever Having High Blood Pressure",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+
+ggplot(all_cog_var_pivot, aes(x = Age_group2, y = Score, weight = Weight, fill = factor(Psych_Problems)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("skyblue", "lightcoral"),
+                    name = "Has Ever Had Psych Problems",
+                    labels = c("No", "Yes"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Ever Having Psych Problems",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(heavy_drink= case_when(
+    Drinks_day < 1 ~ 0,
+    Drinks_day < 4 ~ 1,
+    TRUE ~ 3
+  ))
+
+ggplot(all_cog_var_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(heavy_drink)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#dbe4ee", "#81a4cd", "#3e7cb1"),
+                    name = "How Many Drinks Do You Have When You Drink?",
+                    labels = c("Doesn't Drink", "1-3 Drinks (moderate)", "4+ Drinks (heavy)"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Heavy Drinking",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Drink_Day_week= case_when(
+    Drinks_a_week < 1 ~ 0,
+    Drinks_a_week < 3 ~ 1,
+    Drinks_a_week < 5 ~ 2,
+    TRUE ~ 3
+  ))
+
+ggplot(all_cog_var_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(Drink_Day_week)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#dbe4ee", "#81a4cd", "#3e7cb1", "skyblue"),
+                    name = "How Many Days a Week Do You Drink?",
+                    labels = c("0 Days", "1-2 Days", "3-4 Days", "5+ Days"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Drinking Frequency",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Marital_status= case_when(
+    (marital_status == 1)|(marital_status == 3)~ 0,
+    (marital_status == 4)|(marital_status == 5)|(marital_status == 6)~1,
+    marital_status == 7 ~ 2,
+    marital_status == 8 ~ 3))
+
+all_cog_var_pivot <- all_cog_var_pivot[!is.na(all_cog_var_pivot$Marital_status),]
+ggplot(all_cog_var_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(Marital_status)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#dbe4ee", "#81a4cd", "#3e7cb1", "skyblue"),
+                    name = "Marital Status",
+                    labels = c("Married or Partnered", "Divorced or Seperated", "Widowed", "Never Married"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Marital Status",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+
+all_cog_var_pivot <- all_cog_var_pivot[!is.na(all_cog_var_pivot$urban),]
+
+ggplot(all_cog_var_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(urban, exclude = NA)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#dbe4ee", "#81a4cd", "#3e7cb1"),
+                    name = "Area Predominately Lived In",
+                    labels = c("Urban", "Suburban", "Rural"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nArea Predominantely Lived In",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+##--##
+library(dplyr)
+all_cog_var <- subset(HRS, select = c(HHIDPN, R3COG27,
+                                      R3AGEY_E,
+                                      R3SMOKEN,
+                                      R4COG27,
+                                      R4AGEY_E,
+                                      R4SMOKEN,
+                                      R5COG27,
+                                      R5AGEY_E,
+                                      R5SMOKEN,
+                                      R6COG27,
+                                      R6AGEY_E,
+                                      R6SMOKEN,
+                                      R7COG27,
+                                      R7AGEY_E,
+                                      R7SMOKEN,
+                                      R8COG27,
+                                      R8AGEY_E,
+                                      R8SMOKEN,
+                                      R9COG27,
+                                      R9AGEY_E,
+                                      R9SMOKEN,
+                                      R10COG27,
+                                      R10AGEY_E,
+                                      R10SMOKEN,
+                                      R11COG27,
+                                      R11AGEY_E,
+                                      R11SMOKEN,
+                                      R12COG27,
+                                      R12AGEY_E,
+                                      R12SMOKEN,
+                                      R13COG27,
+                                      R13AGEY_E,
+                                      R13SMOKEN,
+                                      R14COG27,
+                                      R14AGEY_E,
+                                      R14SMOKEN,
+                                      R15COG27,
+                                      R15AGEY_E,
+                                      R15SMOKEN,
+                                      R3WTRESP,
+                                      R4WTRESP,
+                                      R5WTRESP,
+                                      R6WTRESP,
+                                      R7WTRESP,
+                                      R8WTRESP,
+                                      R9WTRESP,
+                                      R10WTRESP,
+                                      R11WTRESP,
+                                      R12WTRESP,
+                                      R13WTRESP,
+                                      R14WTRESP,
+                                      R15WTRESP,
+                                      R3CESD,
+                                      R4CESD,
+                                      R5CESD,
+                                      R6CESD,
+                                      R7CESD,
+                                      R8CESD,
+                                      R9CESD,
+                                      R10CESD,
+                                      R11CESD,
+                                      R12CESD,
+                                      R13CESD,
+                                      R14CESD,
+                                      R15CESD,
+                                      RAHISPAN,
+                                      RAEDEGRM,
+                                      R3DIABE,
+                                      R4DIABE,
+                                      R5DIABE,
+                                      R6DIABE,
+                                      R7DIABE,
+                                      R8DIABE,
+                                      R9DIABE,
+                                      R10DIABE,
+                                      R11DIABE,
+                                      R12DIABE,
+                                      R13DIABE,
+                                      R14DIABE,
+                                      R15DIABE,
+                                      R3BMI,
+                                      R4BMI,
+                                      R5BMI,
+                                      R6BMI,
+                                      R7BMI,
+                                      R8BMI,
+                                      R9BMI,
+                                      R10BMI,
+                                      R11BMI,
+                                      R12BMI,
+                                      R13BMI,
+                                      R14BMI,
+                                      R15BMI,
+                                      RAESTRAT,
+                                      RAEHSAMP,
+                                      R7LTACTX,
+                                      R8LTACTX,
+                                      R9LTACTX,
+                                      R10LTACTX,
+                                      R11LTACTX,
+                                      R12LTACTX,
+                                      R13LTACTX,
+                                      R14LTACTX,
+                                      R15LTACTX,
+                                      R7SLEEPWKE,
+                                      R8SLEEPWKE,
+                                      R9SLEEPWKE,
+                                      R10SLEEPWKE,
+                                      R11SLEEPWKE,
+                                      R12SLEEPWKE,
+                                      R13SLEEPWKE,
+                                      R14SLEEPWKE,
+                                      R15SLEEPWKE,
+                                      R7SLEEPFAL,
+                                      R8SLEEPFAL,
+                                      R9SLEEPFAL,
+                                      R10SLEEPFAL,
+                                      R11SLEEPFAL,
+                                      R12SLEEPFAL,
+                                      R13SLEEPFAL,
+                                      R14SLEEPFAL,
+                                      R15SLEEPFAL,
+                                      R3HIBPE,
+                                      R4HIBPE,
+                                      R5HIBPE,
+                                      R6HIBPE,
+                                      R7HIBPE,
+                                      R8HIBPE,
+                                      R9HIBPE,
+                                      R10HIBPE,
+                                      R11HIBPE,
+                                      R12HIBPE,
+                                      R13HIBPE,
+                                      R14HIBPE,
+                                      R15HIBPE,
+                                      R3PSYCHE,
+                                      R4PSYCHE,
+                                      R5PSYCHE,
+                                      R6PSYCHE,
+                                      R7PSYCHE,
+                                      R8PSYCHE,
+                                      R9PSYCHE,
+                                      R10PSYCHE,
+                                      R11PSYCHE,
+                                      R12PSYCHE,
+                                      R13PSYCHE,
+                                      R14PSYCHE,
+                                      R15PSYCHE,
+                                      R3DRINKN,
+                                      R4DRINKN,
+                                      R5DRINKN,
+                                      R6DRINKN,
+                                      R7DRINKN,
+                                      R8DRINKN,
+                                      R9DRINKN,
+                                      R10DRINKN,
+                                      R11DRINKN,
+                                      R12DRINKN,
+                                      R13DRINKN,
+                                      R14DRINKN,
+                                      R15DRINKN,
+                                      R3DRINKD,
+                                      R4DRINKD,
+                                      R5DRINKD,
+                                      R6DRINKD,
+                                      R7DRINKD,
+                                      R8DRINKD,
+                                      R9DRINKD,
+                                      R10DRINKD,
+                                      R11DRINKD,
+                                      R12DRINKD,
+                                      R13DRINKD,
+                                      R14DRINKD,
+                                      R15DRINKD,
+                                      R3MSTAT,
+                                      R4MSTAT,
+                                      R5MSTAT,
+                                      R6MSTAT,
+                                      R7MSTAT,
+                                      R8MSTAT,
+                                      R9MSTAT,
+                                      R10MSTAT,
+                                      R11MSTAT,
+                                      R12MSTAT,
+                                      R13MSTAT,
+                                      R14MSTAT,
+                                      R15MSTAT,
+                                      R3URBRUR,
+                                      R4URBRUR,
+                                      R5URBRUR,
+                                      R6URBRUR,
+                                      R7URBRUR,
+                                      R8URBRUR,
+                                      R9URBRUR,
+                                      R10URBRUR,
+                                      R11URBRUR,
+                                      R12URBRUR,
+                                      R13URBRUR,
+                                      R14URBRUR,
+                                      R15URBRUR
+                                     ))
+library(dplyr)
+all_cog_var <- all_cog_var %>%
+  mutate(weight = case_when(
+    !is.na(R15WTRESP) & R15WTRESP != 0 ~ R15WTRESP,
+    !is.na(R14WTRESP) & R14WTRESP != 0 ~ R14WTRESP,
+    !is.na(R13WTRESP) & R13WTRESP != 0~ R13WTRESP,
+    !is.na(R12WTRESP) & R12WTRESP != 0 ~ R12WTRESP,
+    !is.na(R11WTRESP) & R11WTRESP != 0 ~ R11WTRESP,
+    !is.na(R10WTRESP) & R10WTRESP != 0 ~ R10WTRESP,
+    !is.na(R9WTRESP) & R9WTRESP != 0 ~ R9WTRESP,
+    !is.na(R8WTRESP) & R8WTRESP != 0 ~ R8WTRESP,
+    !is.na(R7WTRESP) & R7WTRESP != 0 ~ R7WTRESP,
+    TRUE ~ 0
+  ))
+
+all_cog_var_pivot <- data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R7COG27, Age = all_cog_var$R7AGEY_E, Smoke = all_cog_var$R7SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R7CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R7DIABE, BMI = all_cog_var$R7BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R7HIBPE, Psych_Problems = all_cog_var$R7PSYCHE, Drinks_day = all_cog_var$R7DRINKN, Drinks_a_week = all_cog_var$R7DRINKD, marital_status = all_cog_var$R7MSTAT, urban = all_cog_var$R7URBRUR, Exercise = all_cog_var$R7LTACTX, Early = all_cog_var$R7SLEEPWKE, fall = all_cog_var$R7SLEEPFAL)
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R8COG27, Age = all_cog_var$R8AGEY_E, Smoke = all_cog_var$R8SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R8CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R8DIABE, BMI = all_cog_var$R8BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R8HIBPE, Psych_Problems = all_cog_var$R8PSYCHE, Drinks_day = all_cog_var$R8DRINKN, Drinks_a_week = all_cog_var$R8DRINKD, marital_status = all_cog_var$R8MSTAT, urban = all_cog_var$R8URBRUR,  Exercise = all_cog_var$R8LTACTX, Early = all_cog_var$R8SLEEPWKE, fall = all_cog_var$R8SLEEPFAL))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R9COG27, Age = all_cog_var$R9AGEY_E, Smoke = all_cog_var$R9SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R9CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R9DIABE, BMI = all_cog_var$R9BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R9HIBPE, Psych_Problems = all_cog_var$R9PSYCHE, Drinks_day = all_cog_var$R9DRINKN, Drinks_a_week = all_cog_var$R9DRINKD, marital_status = all_cog_var$R9MSTAT, urban = all_cog_var$R9URBRUR,  Exercise = all_cog_var$R9LTACTX, Early = all_cog_var$R9SLEEPWKE, fall = all_cog_var$R9SLEEPFAL))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R10COG27, Age = all_cog_var$R10AGEY_E, Smoke = all_cog_var$R10SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R10CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R10DIABE, BMI = all_cog_var$R10BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R10HIBPE, Psych_Problems = all_cog_var$R10PSYCHE, Drinks_day = all_cog_var$R10DRINKN, Drinks_a_week = all_cog_var$R10DRINKD, marital_status = all_cog_var$R10MSTAT, urban = all_cog_var$R10URBRUR,  Exercise = all_cog_var$R10LTACTX, Early = all_cog_var$R10SLEEPWKE, fall = all_cog_var$R10SLEEPFAL))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R11COG27, Age = all_cog_var$R11AGEY_E, Smoke = all_cog_var$R11SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R11CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R11DIABE, BMI = all_cog_var$R11BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R11HIBPE, Psych_Problems = all_cog_var$R11PSYCHE, Drinks_day = all_cog_var$R11DRINKN, Drinks_a_week = all_cog_var$R11DRINKD, marital_status = all_cog_var$R11MSTAT, urban = all_cog_var$R11URBRUR,  Exercise = all_cog_var$R11LTACTX, Early = all_cog_var$R11SLEEPWKE, fall = all_cog_var$R11SLEEPFAL))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R12COG27, Age = all_cog_var$R12AGEY_E, Smoke = all_cog_var$R12SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R12CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R12DIABE, BMI = all_cog_var$R12BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R12HIBPE, Psych_Problems = all_cog_var$R12PSYCHE, Drinks_day = all_cog_var$R12DRINKN, Drinks_a_week = all_cog_var$R12DRINKD, marital_status = all_cog_var$R12MSTAT, urban = all_cog_var$R12URBRUR, Exercise = all_cog_var$R12LTACTX, Early = all_cog_var$R12SLEEPWKE, fall = all_cog_var$R12SLEEPFAL))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R13COG27, Age = all_cog_var$R13AGEY_E, Smoke = all_cog_var$R13SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R13CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R13DIABE, BMI = all_cog_var$R13BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R13HIBPE, Psych_Problems = all_cog_var$R13PSYCHE, Drinks_day = all_cog_var$R13DRINKN, Drinks_a_week = all_cog_var$R13DRINKD, marital_status = all_cog_var$R13MSTAT, urban = all_cog_var$R13URBRUR, Exercise = all_cog_var$R13LTACTX, Early = all_cog_var$R13SLEEPWKE, fall = all_cog_var$R13SLEEPFAL))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R14COG27, Age = all_cog_var$R14AGEY_E, Smoke = all_cog_var$R14SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R14CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R14DIABE, BMI = all_cog_var$R14BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R14HIBPE, Psych_Problems = all_cog_var$R14PSYCHE, Drinks_day = all_cog_var$R14DRINKN, Drinks_a_week = all_cog_var$R14DRINKD, marital_status = all_cog_var$R14MSTAT, urban = all_cog_var$R14URBRUR, Exercise = all_cog_var$R14LTACTX, Early = all_cog_var$R14SLEEPWKE, fall = all_cog_var$R14SLEEPFAL))
+all_cog_var_pivot <- rbind(all_cog_var_pivot, data.frame(ID = all_cog_var$HHIDPN, Score = all_cog_var$R14COG27, Age = all_cog_var$R15AGEY_E, Smoke = all_cog_var$R15SMOKEN, Weight = all_cog_var$weight, Hispanic = all_cog_var$RAHISPAN, Depressed = all_cog_var$R15CESD, Education = all_cog_var$RAEDEGRM, diabetes = all_cog_var$R15DIABE, BMI = all_cog_var$R15BMI, Stratum = all_cog_var$RAESTRAT, Cluster = all_cog_var$RAEHSAMP, Blood_pressure = all_cog_var$R15HIBPE, Psych_Problems = all_cog_var$R15PSYCHE, Drinks_day = all_cog_var$R15DRINKN, Drinks_a_week = all_cog_var$R15DRINKD, marital_status = all_cog_var$R15MSTAT, urban = all_cog_var$R15URBRUR, Exercise = all_cog_var$R15LTACTX, Early = all_cog_var$R15SLEEPWKE, fall = all_cog_var$R15SLEEPFAL))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Is_depressed = case_when(
+    Depressed < 3 ~ 0,
+    TRUE ~ 1
+  ))
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Education_Level = case_when(
+    Education == 0 ~ 0,
+    Education < 4 ~ 1,
+    Education < 6 ~ 2,
+    Education < 8 ~ 3,
+    TRUE ~ 5
+  ))
+all_cog_var_pivot <- all_cog_var_pivot[all_cog_var_pivot$Education_Level != 5,]
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(BMI_category = case_when(
+    BMI < 18.5 ~ 0,
+    BMI < 24.9 ~ 1,
+    BMI < 29.9 ~ 2,
+    BMI < 34.9 ~ 3,
+    TRUE ~ 4
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(heavy_drink= case_when(
+    Drinks_day < 1 ~ 0,
+    Drinks_day < 4 ~ 1,
+    Drinks_day < 5 ~ 2,
+    TRUE ~ 3
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Drink_Day_week= case_when(
+    Drinks_a_week < 1 ~ 0,
+    Drinks_a_week < 3 ~ 1,
+    Drinks_a_week < 5 ~ 2,
+    TRUE ~ 3
+  ))
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Marital_status= case_when(
+    (marital_status == 1)|(marital_status == 3)~ 0,
+    (marital_status == 4)|(marital_status == 5)|(marital_status == 6)~1,
+    marital_status == 7 ~ 2,
+    marital_status == 8 ~ 3))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Lonely_Category = case_when(
+    lonely < 1.5 ~ 1,
+    lonely < 2 ~ 2,
+    lonely < 2.5 ~ 3,
+    TRUE ~ 4
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(exercise_freq = case_when(
+    Exercise >= 4 ~ 2,
+    Exercise >= 2 ~ 1,
+    TRUE ~ 0
+  ))
+
+all_cog_var_pivot$ageminus50 <- all_cog_var_pivot$Age - 50
+
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(doesnt_drink = case_when(
+    heavy_drink ==0 ~ 1,
+    TRUE ~ 0
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(heavy_drinker =case_when(
+    heavy_drink == 3 |heavy_drink == 2 ~ 1,
+    TRUE ~ 0
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  mutate(Marital_end = case_when(
+    Marital_status == 1 | Marital_status == 2 ~ 1,
+    TRUE ~ 0 
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>% 
+  mutate(trouble_falling = case_when(
+    fall == 1 ~ 1,
+    TRUE ~0
+  ))
+
+library(ggplot2)
+
+all_cog_var_pivot <- all_cog_var_pivot[all_cog_var_pivot$ageminus50 >= 0,]
+ggplot(all_cog_var_pivot, aes(ageminus50, Score, weight = Weight))+
+ geom_jitter(alpha=0.01)+
+ geom_smooth(se = FALSE)+
+  labs(title = "Weighted Jittered Scatter Plot of Age vs Cognition Score (alpha = 0.01)\nWith Generalized Additive Model Smoothing")
+
+all_cog_var_pivot$bmidiff <- abs(all_cog_var_pivot$BMI - 25)
+
+all_cog_var_pivot <- all_cog_var_pivot %>% 
+ mutate(wake_up_early = case_when(
+   Early == 1 ~ 1,
+   TRUE ~0
+ ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>% 
+  mutate(underweight = case_when(
+    BMI_category == 0 ~ 1,
+    TRUE ~0
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot[!is.na(all_cog_var_pivot$Score), ]
+colSums(is.na(all_cog_var_pivot))
+hist(rowSums(is.na(all_cog_var_pivot)))
+all_cog_var_pivot <- all_cog_var_pivot[rowSums(is.na(all_cog_var_pivot)) <= 5,]
+
+#Replacing  NA
+
+all_cog_var_pivot$Smoke[is.na(all_cog_var_pivot$Smoke)] <- 1
+
+get_mode <- function(x, na.rm = TRUE) {
+  if (na.rm) {
+    x <- x[!is.na(x)]
+  }
+  # Check if the vector is empty after removing NAs
+  if (length(x) == 0) return(NA)
+  
+  ux <- unique(x)
+  # Use which.max() to find the index of the most frequent value
+  ux[which.max(tabulate(match(x, ux)))]
+}
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  group_by(ID)%>%
+  mutate(Early = ifelse(is.na(Early), get_mode(Early), Early)) %>%
+  ungroup()
+
+all_cog_var_pivot <- all_cog_var_pivot %>%
+  group_by(ID)%>%
+  mutate(fall = ifelse(is.na(fall), get_mode(fall), fall)) %>%
+  ungroup()
+
+all_cog_var_pivot <- all_cog_var_pivot %>% 
+  mutate(trouble_falling = case_when(
+    fall == 1 ~ 1,
+    TRUE ~0
+  ))
+
+all_cog_var_pivot <- all_cog_var_pivot %>% 
+  mutate(wake_up_early = case_when(
+    Early == 1 ~ 1,
+    TRUE ~0
+  ))
+
+all_cog_var_pivot_df <- all_cog_var_pivot[, c(1,2,4,5,6,9,13,14,22,23, 28, 29, 30,31,32,33,35,36)]
+
+all_cog_var_pivot_df <- na.omit(all_cog_var_pivot_df)
+all_cog_var_pivot_df <- all_cog_var_pivot_df[all_cog_var_pivot_df$ageminus50 >= 0,]
+all_cog_var_pivot_df$stdweights <-  all_cog_var_pivot_df$Weight / mean(all_cog_var_pivot_df$Weight)
+write.csv(all_cog_var_pivot_df,"~all_cog_var_pivot_df.csv", row.names = TRUE)
+
+cor_matrix <- cor(all_cog_var_pivot_df[,c(2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18)], method = "pearson")
+round(cor_matrix,2)
+library(corrplot)
+corrplot(cor_matrix,
+         method = "circle",   # Visualization method: "circle", "square", "number", "color", etc.
+         type = "upper",      # Display the upper triangle only
+         order = "hclust",    # Reorder variables by hierarchical clustering
+         tl.col = "black",    # Color of text labels
+         tl.srt = 45          # Text label rotation (degrees)
+)
+
+library(ggplot2)
+
+ggplot(all_cog_var_pivot, aes(x = Age_group, y = Score, weight = Weight, fill = factor(exercise_freq, exclude = NA)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("#dbe4ee", "#81a4cd", "#3e7cb1"),
+                    name = "Amount of Frequent Light Physical Activity",
+                    labels = c("Frequent", "Somewhat Frequent", "Never"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Frequency of Light Physical Activity",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+
+
+ggplot(all_cog_var_pivot, aes(x = Age_group2, y = Score, weight = Weight, fill = factor(diabetes)))+
+  geom_boxplot()+
+  scale_fill_manual(values = c("skyblue", "lightcoral"),
+                    name = "Has Diabetes?",
+                    labels = c("No", "Yes"))+
+  labs(title = "Weighted Distribution of Cognition Score Across Age Groups\nOn Having Diabetes",
+       x = "Age Group",
+       y = "Cognition Score")+xlab("Age Group")
+
+ggplot(all_cog_var_pivot, aes(x = Age_group2, weight = Weight, fill = factor(diabetes)))+
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = c("skyblue", "lightcoral"),
+                    name = "Has Diabetes?",
+                    labels = c("No", "Yes"))+
+  labs(y = "Proportion", x = "Age_group", title = "Weighted Distribution of Diabetics for each Age Group")
+
+ggplot(all_cog_var_pivot, aes(x = Age_group2, weight = Weight, fill = factor(Blood_pressure)))+
+  geom_bar(position = "fill") +
+  scale_fill_manual(values = c("skyblue", "lightcoral"),
+                    name = "Has Ever Had High Blood Pressure?",
+                    labels = c("No", "Yes"))+
+  labs(y = "Proportion", x = "Age_group", title = "Weighted Distribution of Ever Having Blood Pressure for each Age Group")
